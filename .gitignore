@@ -1,0 +1,8 @@
+# Публикуется только рабочий скилл
+/*
+!/.gitignore
+!/README.md
+!/game-design-knowledge/
+!/.gitattributes
+!/LICENSE
+__pycache__/
