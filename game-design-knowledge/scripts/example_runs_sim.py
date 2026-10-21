@@ -16,15 +16,23 @@
 Здоровье и урон врагов растут на enemy_scale за этаж, у каждого врага разброс ±variance. После боя — выбор одного из трёх улучшений,
 после этажа — отдых: лечение rest_heal от максимума. Победа — пройден 8-й этаж.
 Боты: greedy выбирает улучшение по приоритетам персонажа и лечится, когда здоровья мало; random — случайно.
+Бой длиннее 1000 раундов считается поражением героя (защита от зацикленных конфигураций).
 
 Строка JSONL на забег: run, seed, character, bot, win, floor_reached, died_on_floor_1,
 run_minutes (условные минуты: раунды боя / 6), build (улучшение, взятое чаще всего).
+Код выхода: 0 — успех, 2 — ошибка ввода.
 """
 
 import argparse
+import io
 import json
+import math
 import random
 import sys
+from collections import Counter
+
+MAX_ROUNDS = 1000
+STATS = ("damage", "hp", "armor", "crit")
 
 CONFIG = {
     "floors": 8,
@@ -43,9 +51,7 @@ CONFIG = {
 
 
 def fight(hero, enemy_hp, enemy_damage, rng):
-    rounds = 0
-    while True:
-        rounds += 1
+    for rounds in range(1, MAX_ROUNDS + 1):
         hit = hero["damage"] * (2 if rng.random() < hero["crit"] else 1)
         enemy_hp -= hit
         if enemy_hp <= 0:
@@ -53,6 +59,7 @@ def fight(hero, enemy_hp, enemy_damage, rng):
         hero["cur"] -= max(1, round(enemy_damage) - hero["armor"])
         if hero["cur"] <= 0:
             return False, rounds
+    return False, MAX_ROUNDS
 
 
 def upgrade(hero, cfg, rng, bot, picks):
@@ -73,7 +80,7 @@ def upgrade(hero, cfg, rng, bot, picks):
         hero["cur"] += value
     else:
         hero[choice] += value
-    picks[choice] = picks.get(choice, 0) + 1
+    picks[choice] += 1
 
 
 def play_run(run, seed, cfg, characters, bots):
@@ -81,7 +88,7 @@ def play_run(run, seed, cfg, characters, bots):
     name, bot = rng.choice(characters), rng.choice(bots)
     hero = dict(cfg["characters"][name])
     hero["cur"] = hero["hp"]
-    picks, rounds, floor_reached, alive = {}, 0, 0, True
+    picks, rounds, floor_reached, alive = Counter(), 0, 0, True
     enemy = cfg["enemy"]
     for floor in range(1, cfg["floors"] + 1):
         floor_reached = floor
@@ -101,22 +108,65 @@ def play_run(run, seed, cfg, characters, bots):
         if not alive:
             break
         hero["cur"] = min(hero["hp"], hero["cur"] + cfg["rest_heal"] * hero["hp"])
-    build = max(sorted(picks), key=lambda k: picks[k]) if picks else "none"
+    build = max(sorted(picks), key=picks.__getitem__) if picks else "none"
     return {"run": run, "seed": seed, "character": name, "bot": bot, "win": alive,
             "floor_reached": floor_reached, "died_on_floor_1": not alive and floor_reached == 1,
             "run_minutes": round(rounds / 6, 1), "build": build}
+
+
+def number(value, low, high=math.inf, integer=False):
+    kinds = (int,) if integer else (int, float)
+    return (isinstance(value, kinds) and not isinstance(value, bool)
+            and math.isfinite(value) and low <= value <= high)
+
+
+def config_errors(cfg):
+    """Список проблем конфигурации; пустой список — конфигурация годна."""
+    if not isinstance(cfg, dict):
+        return ["config must be a JSON object"]
+    errors = []
+    checks = [("floors", 1, 1000, True), ("fights_per_floor", 1, 1000, True),
+              ("enemy_scale", 0.01, 100, False), ("rest_heal", 0, 1, False)]
+    errors += [f"{key}: expected a number in {lo}..{hi}" for key, lo, hi, whole in checks
+               if not number(cfg.get(key), lo, hi, whole)]
+    if not (isinstance(cfg.get("boss_floors"), list) and all(number(b, 1, 1000, True) for b in cfg["boss_floors"])):
+        errors.append("boss_floors: expected a list of floor numbers")
+    enemy = cfg.get("enemy")
+    if not isinstance(enemy, dict) or not all(number(enemy.get(k), lo) for k, lo in
+                                              (("hp", 1e-9), ("damage", 1e-9), ("boss_hp_mult", 1e-9),
+                                               ("boss_damage_mult", 1e-9), ("variance", 0))):
+        errors.append("enemy: needs positive hp, damage, boss_hp_mult, boss_damage_mult and variance >= 0")
+    elif enemy["variance"] >= 1:
+        errors.append("enemy.variance: must be below 1")
+    upgrades = cfg.get("upgrades")
+    if not isinstance(upgrades, dict) or len(upgrades) < 3:
+        errors.append("upgrades: expected an object with at least 3 upgrades")
+    else:
+        errors += [f"upgrades.{k}: unknown upgrade or bad value" for k, v in upgrades.items()
+                   if k not in STATS + ("heal",) or not number(v, 0)]
+    characters = cfg.get("characters")
+    if not isinstance(characters, dict) or not characters:
+        return errors + ["characters: expected a non-empty object"]
+    for name, hero in characters.items():
+        ok = (isinstance(hero, dict) and number(hero.get("hp"), 1) and number(hero.get("damage"), 1e-9)
+              and number(hero.get("armor"), 0) and number(hero.get("crit"), 0, 1)
+              and isinstance(hero.get("priorities"), list) and all(p in STATS + ("heal",) for p in hero["priorities"]))
+        if not ok:
+            errors.append(f"characters.{name}: needs hp >= 1, damage > 0, armor >= 0, crit 0..1 "
+                          "and priorities from damage, hp, armor, crit, heal")
+    return errors
 
 
 def load_config(path):
     try:
         with open(path, encoding="utf-8-sig") as stream:
             cfg = json.load(stream)
-        for key in ("floors", "fights_per_floor", "boss_floors", "enemy", "enemy_scale", "rest_heal",
-                    "characters", "upgrades"):
-            cfg[key]
-        return cfg
-    except (OSError, ValueError, KeyError, TypeError) as err:
-        raise SystemExit(f"error: {path}: {err!r}")
+    except (OSError, ValueError) as err:
+        raise SystemExit(f"error: {path}: {err}")
+    errors = config_errors(cfg)
+    if errors:
+        raise SystemExit(f"error: {path}: " + "; ".join(errors))
+    return cfg
 
 
 def main(argv=None):
@@ -143,6 +193,9 @@ def main(argv=None):
 
 
 if __name__ == "__main__":
+    for stream in (sys.stdout, sys.stderr):
+        if isinstance(stream, io.TextIOWrapper):
+            stream.reconfigure(errors="backslashreplace")
     try:
         raise SystemExit(main())
     except SystemExit as exit_:

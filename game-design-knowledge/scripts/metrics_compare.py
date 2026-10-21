@@ -17,7 +17,8 @@
     "rate:finished_tutorial": {"better": "higher"}
   }
 Список коридоров у одного шаблона проверяет несколько статистик одной числовой метрики:
-каждая даёт свою строку с пометкой [stat].
+каждая даёт свою строку с пометкой [stat] (у долей — [#1], [#2]). Поправка Холма считает
+такую метрику одним тестом.
 
 Значимость: доли — z-тест двух пропорций, числа — U-тест Манна — Уитни по сохранённым значениям
 (для любого "stat": он сравнивает распределения целиком, а коридор проверяется по выбранной статистике).
@@ -78,6 +79,13 @@ def load_targets(path):
                 raise SystemExit(f"error: {path}: {pattern}: better must be 'higher' or 'lower'")
             if target.get("stat", "median") not in STATS:
                 raise SystemExit(f"error: {path}: {pattern}: stat must be one of {', '.join(sorted(STATS))}")
+            for bound in ("min", "max"):
+                value_ = target.get(bound)
+                if bound in target and (isinstance(value_, bool) or not isinstance(value_, (int, float))):
+                    raise SystemExit(f"error: {path}: {pattern}: {bound} must be a number")
+        stats = [t.get("stat", "median") for t in items if isinstance(t, dict)]
+        if len(stats) != len(set(stats)):
+            raise SystemExit(f"error: {path}: {pattern}: each corridor in a list needs its own stat")
     return targets
 
 
@@ -156,13 +164,14 @@ def p_value(before, after):
 
 
 def holm_adjust(rows):
-    """Поправка Холма — Бонферрони на множественные сравнения: пишет p_adj в строки."""
-    tested = sorted((r for r in rows if r["p"] is not None), key=lambda r: r["p"])
-    running = 0.0
-    m = len(tested)
-    for i, row in enumerate(tested):
-        running = max(running, min(1.0, (m - i) * row["p"]))
-        row["p_adj"] = running
+    """Поправка Холма — Бонферрони: один тест на метрику, даже если у неё несколько коридоров."""
+    tests = sorted({(r["metric"], r["p"]) for r in rows if r["p"] is not None}, key=lambda t: t[1])
+    adjusted, running = {}, 0.0
+    for i, (metric, p) in enumerate(tests):
+        running = max(running, min(1.0, (len(tests) - i) * p))
+        adjusted[metric] = running
+    for row in rows:
+        row["p_adj"] = adjusted.get(row["metric"], row["p"])
 
 
 def verdict(row, alpha, min_change):
@@ -207,12 +216,13 @@ def compare(before, after, targets, alpha, min_change, only, holm):
         b, a = b_metrics[key], a_metrics[key]
         found = find_targets(key, targets)
         p = p_value(b, a)
-        for target in found:
+        for number, target in enumerate(found, 1):
             label = key
-            if len(found) > 1 and b["kind"] == "num":
-                label = f"{key} [{(target or {}).get('stat', 'median')}]"
+            if len(found) > 1:
+                label += f" [{(target or {}).get('stat', 'median')}]" if b["kind"] == "num" else f" [#{number}]"
             rows.append({
                 "key": label,
+                "metric": key,
                 "kind": b["kind"],
                 "target": target,
                 "before": stat_value(b, target),
@@ -303,8 +313,11 @@ def main(argv=None):
     if out_of_band:
         print("Still out of band: " + ", ".join(out_of_band))
     if args.json:
-        with open(args.json, "w", encoding="utf-8") as stream:
-            json.dump(rows, stream, ensure_ascii=False, indent=1)
+        try:
+            with open(args.json, "w", encoding="utf-8") as stream:
+                json.dump(rows, stream, ensure_ascii=False, indent=1)
+        except OSError as err:
+            raise SystemExit(f"error: {args.json}: {err}")
     return 1 if counts.get("worse") else 0
 
 

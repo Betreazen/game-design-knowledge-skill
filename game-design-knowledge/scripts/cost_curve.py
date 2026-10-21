@@ -6,8 +6,10 @@
   python3 cost_curve.py data/cards.json --cost mana --exclude rarity --threshold 0.75 --json curve.json
 
 Вход: CSV с заголовком или JSON-массив объектов. Одна строка — одна карта, юнит или предмет.
-Признаки — числовые столбцы; ключевые слова кодируются 0/1 (true/false тоже понимаются),
-пустая ячейка признака считается нулём.
+Признаки — числовые столбцы; ключевые слова кодируются 0/1 (true/false и yes/no тоже понимаются),
+пустая ячейка признака считается нулём. Десятичная запятая допустима («1,5»), разделитель CSV —
+запятая или точка с запятой. Столбцы без разброса пропускаются: их цену нельзя отличить от интерсепта.
+Признак, который есть только у одной строки, «съедает» её отклонение: такую строку кривая не отметит.
 Без --features берутся все числовые столбцы, кроме --cost, --name и --exclude.
 
 Что печатает:
@@ -27,8 +29,8 @@ import json
 import math
 import sys
 
-TRUE_WORDS = {"true", "yes", "y"}
-FALSE_WORDS = {"false", "no", "n", ""}
+TRUE_WORDS = {"true", "yes"}
+FALSE_WORDS = {"false", "no"}
 
 
 def to_number(value):
@@ -40,12 +42,16 @@ def to_number(value):
     if text in TRUE_WORDS:
         return 1.0
     if text in FALSE_WORDS:
-        return 0.0 if text else None
+        return 0.0
     try:
         number = float(text.replace(",", "."))
     except ValueError:
         return None
     return number if math.isfinite(number) else None
+
+
+def is_blank(value):
+    return value is None or str(value).strip() == ""
 
 
 def read_rows(path):
@@ -62,16 +68,19 @@ def read_rows(path):
         if not isinstance(rows, list) or not all(isinstance(r, dict) for r in rows):
             raise SystemExit(f"error: {path}: expected a JSON array of objects")
         return rows
-    return list(csv.DictReader(io.StringIO(text)))
+    first = text.splitlines()[0] if text else ""
+    delimiter = ";" if first.count(";") > first.count(",") else ","
+    return list(csv.DictReader(io.StringIO(text), delimiter=delimiter))
 
 
 def solve(matrix, vector):
     """Гаусс с выбором главного элемента; None, если система вырождена."""
     n = len(vector)
     a = [row[:] + [vector[i]] for i, row in enumerate(matrix)]
+    tolerance = 1e-10 * max(abs(matrix[i][i]) for i in range(n))  # относительно масштаба данных
     for col in range(n):
         pivot = max(range(col, n), key=lambda r: abs(a[r][col]))
-        if abs(a[pivot][col]) < 1e-12:
+        if abs(a[pivot][col]) <= tolerance:
             return None
         a[col], a[pivot] = a[pivot], a[col]
         for r in range(n):
@@ -92,8 +101,14 @@ def fit(xs, ys):
 
 def pick_features(rows, cost, name, exclude):
     columns = [c for c in rows[0] if c not in {cost, name} | exclude]
-    return [c for c in columns if any(to_number(r.get(c)) is not None for r in rows)
-            and all(to_number(r.get(c)) is not None or r.get(c) in (None, "") for r in rows)]
+    return [c for c in columns if any(not is_blank(r.get(c)) for r in rows)
+            and all(is_blank(r.get(c)) or to_number(r.get(c)) is not None for r in rows)]
+
+
+def constant_columns(rows, features):
+    """Столбцы без разброса: они неотличимы от интерсепта и делают систему вырожденной."""
+    values = {c: {0.0 if is_blank(r.get(c)) else to_number(r.get(c)) for r in rows} for c in features}
+    return [c for c in features if len(values[c]) <= 1]
 
 
 def main(argv=None):
@@ -111,6 +126,8 @@ def main(argv=None):
     rows = read_rows(args.data)
     if not rows:
         raise SystemExit(f"error: {args.data}: no rows")
+    if args.cost not in rows[0]:
+        raise SystemExit(f"error: no cost column {args.cost!r}; columns: {', '.join(rows[0])}")
     exclude = {c.strip() for c in args.exclude.split(",") if c.strip()}
     if args.features:
         features = [c.strip() for c in args.features.split(",") if c.strip()]
@@ -119,6 +136,12 @@ def main(argv=None):
             raise SystemExit(f"error: unknown feature columns: {', '.join(missing)}")
     else:
         features = pick_features(rows, args.cost, args.name, exclude)
+    constant = constant_columns(rows, features)
+    if constant:
+        if args.features:
+            raise SystemExit(f"error: columns without variation cannot be priced: {', '.join(constant)}")
+        print(f"Skipped columns without variation: {', '.join(constant)}")
+        features = [c for c in features if c not in constant]
     if not features:
         raise SystemExit("error: no numeric feature columns found; pass --features")
 
@@ -126,11 +149,11 @@ def main(argv=None):
     for i, row in enumerate(rows, 1):
         y = to_number(row.get(args.cost))
         # пустая ячейка признака = «нет ключевого слова» (0); пустая стоимость — строка пропускается
-        x = [0.0 if row.get(c) in (None, "") else to_number(row.get(c)) for c in features]
+        x = [0.0 if is_blank(row.get(c)) else to_number(row.get(c)) for c in features]
         if y is None or any(v is None for v in x):
             skipped += 1
             continue
-        names.append(str(row.get(args.name, f"row {i}")))
+        names.append(f"row {i}" if is_blank(row.get(args.name)) else str(row.get(args.name)))
         xs.append(x)
         ys.append(y)
     if len(ys) <= len(features) + 1:
@@ -161,6 +184,9 @@ def main(argv=None):
     print(f"Cost curve: {args.cost} ~ {' + '.join(features)}  (n={len(ys)}, skipped {skipped})")
     if refit is not None:
         print(f"Refit without {len(ys) - len(inliers)} first-pass outliers")
+    elif len(inliers) < len(ys):
+        print("Refit skipped: without the outliers the curve cannot be fitted (too few rows or a feature "
+              "present only on outliers); the first pass is shown")
     print(f"R^2 = {r2:.3f}, RMSE = {rmse:.2f} cost units (on the rows the curve was fitted to)")
     print(f"{'intercept':<24} {coef[0]:+.3f}")
     for feature, value in zip(features, coef[1:]):
@@ -174,12 +200,15 @@ def main(argv=None):
         verdict = "gives more than it costs" if r > 0 else "overpays"
         print(f"  {name:<28} actual {y:g}, curve {p:.2f}, {r:+.2f}  {verdict}")
     if args.json:
-        with open(args.json, "w", encoding="utf-8") as stream:
-            json.dump({"features": features, "intercept": coef[0], "coefficients": dict(zip(features, coef[1:])),
-                       "r2": r2, "rmse": rmse,
-                       "cards": [{"name": n, "actual": y, "predicted": p, "residual": r}
-                                 for n, y, p, r in zip(names, ys, predicted, residuals)]},
-                      stream, ensure_ascii=False, indent=1)
+        result = {"features": features, "intercept": coef[0], "coefficients": dict(zip(features, coef[1:])),
+                  "r2": r2, "rmse": rmse,
+                  "items": [{"name": n, "actual": y, "predicted": p, "residual": r}
+                            for n, y, p, r in zip(names, ys, predicted, residuals)]}
+        try:
+            with open(args.json, "w", encoding="utf-8") as stream:
+                json.dump(result, stream, ensure_ascii=False, indent=1)
+        except OSError as err:
+            raise SystemExit(f"error: {args.json}: {err}")
     return 0
 
 

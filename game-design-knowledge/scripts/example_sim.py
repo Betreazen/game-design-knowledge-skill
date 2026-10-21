@@ -23,13 +23,16 @@ references/pipeline.md, раздел «Учебный прогон».
 как и в настоящем пайплайне: правим данные, а не код.
 
 Строка JSONL на игрока в партии: match, seed, pick и opp_pick (колоды), bot, opp_bot, went_first, win, draw,
-turns, comeback (победил, отставая по здоровью после 4-го хода соперника), dead_cards (карт в руке в конце).
+turns, comeback (победил, отставая по здоровью после 8-го хода партии — по 4 хода у каждого),
+dead_cards (карт в руке в конце). Код выхода: 0 — успех, 2 — ошибка ввода.
 """
 
 import argparse
+import io
 import json
 import random
 import sys
+from collections import Counter
 
 # (стоимость, атака, здоровье) для существ; (стоимость, урон, None) для молний
 DECKS = {
@@ -40,25 +43,41 @@ DECKS = {
 START_HP, HAND, MAX_MANA, TURN_LIMIT = 20, 4, 8, 50
 
 
+def is_int(value, low):
+    return isinstance(value, int) and not isinstance(value, bool) and value >= low
+
+
 def load_decks(path):
     """Колоды из JSON: {"aggro": [{"cost": 1, "power": 1, "health": 1, "count": 4}, ...]}; health null — молния."""
     try:
         with open(path, encoding="utf-8-sig") as stream:
             raw = json.load(stream)
-        return {name: [(c["cost"], c["power"], c.get("health")) for c in cards for _ in range(c["count"])]
-                for name, cards in raw.items()}
-    except (OSError, ValueError, KeyError, TypeError, AttributeError) as err:
-        raise SystemExit(f"error: {path}: {err!r}")
+    except (OSError, ValueError) as err:
+        raise SystemExit(f"error: {path}: {err}")
+    if not isinstance(raw, dict) or not raw:
+        raise SystemExit(f"error: {path}: expected an object of deck name -> list of cards")
+    decks = {}
+    for name, cards in raw.items():
+        if not isinstance(cards, list):
+            raise SystemExit(f"error: {path}: {name}: expected a list of cards")
+        deck = []
+        for card in cards:
+            ok = (isinstance(card, dict) and is_int(card.get("cost"), 0) and is_int(card.get("power"), 0)
+                  and is_int(card.get("count"), 0)
+                  and (card.get("health") is None or is_int(card.get("health"), 1)))
+            if not ok:
+                raise SystemExit(f"error: {path}: {name}: card needs integer cost >= 0, power >= 0, count >= 0 "
+                                 f"and health >= 1 or null, got {card!r}")
+            deck += [(card["cost"], card["power"], card.get("health"))] * card["count"]
+        if not deck:
+            raise SystemExit(f"error: {path}: {name}: deck is empty")
+        decks[name] = deck
+    return decks
 
 
 def dump_decks(decks):
-    out = {}
-    for name, cards in decks.items():
-        counted = {}
-        for card in cards:
-            counted[card] = counted.get(card, 0) + 1
-        out[name] = [{"cost": c, "power": p, "health": h, "count": n} for (c, p, h), n in counted.items()]
-    return out
+    return {name: [{"cost": c, "power": p, "health": h, "count": n} for (c, p, h), n in Counter(cards).items()]
+            for name, cards in decks.items()}
 
 
 class Player:
@@ -147,6 +166,9 @@ def play_match(match, seed, decks, bots, coin):
         active, other = order[(turn - 1) % 2], order[turn % 2]
         active.turns += 1
         active.draw()
+        if active.hp <= 0:  # усталость убила игрока до его действий
+            winner = other
+            break
         for unit in active.board:
             unit[2] = True  # существа, пережившие ход соперника, готовы атаковать
         play_cards(active, other, rng)
@@ -199,4 +221,13 @@ def main(argv=None):
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    for stream in (sys.stdout, sys.stderr):
+        if isinstance(stream, io.TextIOWrapper):
+            stream.reconfigure(errors="backslashreplace")
+    try:
+        sys.exit(main())
+    except SystemExit as exit_:
+        if isinstance(exit_.code, str):
+            print(exit_.code, file=sys.stderr)
+            sys.exit(2)
+        raise

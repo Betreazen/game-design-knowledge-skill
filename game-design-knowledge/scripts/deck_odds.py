@@ -1,61 +1,59 @@
 #!/usr/bin/env python3
-"""Вероятности колоды по гипергеометрическому распределению: увидеть нужную карту или ресурс вовремя.
+"""Вероятности по гипергеометрическому распределению: увидеть нужное вовремя в колоде, мешке или пуле.
+
+Подходит для любой выборки без возвращения: колода карт, мешок фишек, перемешанный пул наград
+или противников. Термины ниже карточные, но «копии» — это любые нужные объекты в пуле.
 
 Запуск:
   python3 deck_odds.py at-least --deck 40 --copies 17 --need 3 --turn 3            # на play
   python3 deck_odds.py at-least --deck 40 --copies 17 --need 3 --turn 3 --draw     # на draw
-  python3 deck_odds.py at-least --deck 30 --copies 2 --need 1 --seen 7             # явно: 7 карт
+  python3 deck_odds.py at-least --deck 30 --copies 2 --need 1 --seen 7             # явно: 7 вытянутых
   python3 deck_odds.py by-turn --deck 40 --copies 2                                # таблица по ходам 1..10
   python3 deck_odds.py min-copies --deck 40 --need 1 --turn 3 --target 0.90        # сколько копий нужно
   python3 deck_odds.py hand --deck 40 --copies 17 --from 2 --to 5                  # стартовая рука с 2..5
 
-Сколько карт увидено к ходу T: --hand (по умолчанию 7) + (T - 1) на play, ещё +1 на draw;
+Сколько увидено к ходу T: --hand (по умолчанию 7) + (T - 1) на play, ещё +1 на draw;
 --draws-per-turn меняет добор. Муллиганы и поиск по колоде не учитываются.
 Правило Karsten «89 + M %» — условное (считает только партии, где ресурсов хватило) и с муллиганом,
 поэтому безусловные числа отсюда ниже его порогов. Таблица Karsten — в references/systems-balance.md.
+
+Код выхода: 0 — успех; 1 — в min-copies цель недостижима даже со всей колодой; 2 — ошибка ввода.
 """
 
 import argparse
 from math import comb
 
+MAX_DECK = 100_000
+MAX_TURNS = 1_000
+
 
 def p_at_least(deck, copies, seen, need):
     """P(X >= need), X ~ Hypergeometric(deck, copies, seen)."""
     seen = min(seen, deck)
-    total = comb(deck, seen)
-    hits = sum(comb(copies, i) * comb(deck - copies, seen - i)
-               for i in range(need, min(copies, seen) + 1))
-    return hits / total
-
-
-def p_between(deck, copies, seen, low, high):
-    return p_at_least(deck, copies, seen, low) - p_at_least(deck, copies, seen, high + 1)
+    hits = sum(comb(copies, i) * comb(deck - copies, seen - i) for i in range(need, min(copies, seen) + 1))
+    return hits / comb(deck, seen)
 
 
 def cards_seen(turn, hand, on_draw, draws_per_turn):
     return hand + (turn - 1) * draws_per_turn + (draws_per_turn if on_draw else 0)
 
 
-def positive(text):
-    value = int(text)
-    if value < 1:
-        raise argparse.ArgumentTypeError(f"expected a positive integer, got {text}")
-    return value
+def int_in(low, high):
+    def parse(text):
+        value = int(text)
+        if not low <= value <= high:
+            raise argparse.ArgumentTypeError(f"expected an integer in {low}..{high}, got {text}")
+        return value
+    return parse
 
 
-def non_negative(text):
-    value = int(text)
-    if value < 0:
-        raise argparse.ArgumentTypeError(f"expected a non-negative integer, got {text}")
-    return value
-
-
-def add_seen_options(parser):
-    parser.add_argument("--turn", type=positive, help="turn number (cards seen derived from hand and draws)")
-    parser.add_argument("--seen", type=non_negative, help="cards seen, overrides --turn")
-    parser.add_argument("--draw", action="store_true", help="on the draw: one extra card")
-    parser.add_argument("--hand", type=non_negative, default=7, help="opening hand size (default 7)")
-    parser.add_argument("--draws-per-turn", type=non_negative, default=1)
+def add_draw_options(parser, with_turn):
+    if with_turn:
+        parser.add_argument("--turn", type=int_in(1, MAX_TURNS), help="turn number (cards seen derived from hand and draws)")
+        parser.add_argument("--seen", type=int_in(0, MAX_DECK), help="cards seen, overrides --turn")
+        parser.add_argument("--draw", action="store_true", help="on the draw: one extra card")
+    parser.add_argument("--hand", type=int_in(0, MAX_DECK), default=7, help="opening hand size (default 7)")
+    parser.add_argument("--draws-per-turn", type=int_in(0, MAX_DECK), default=1)
 
 
 def resolve_seen(parser, args):
@@ -67,32 +65,32 @@ def resolve_seen(parser, args):
 
 
 def main(argv=None):
-    parser = argparse.ArgumentParser(description="Hypergeometric deck odds for card game design.")
+    parser = argparse.ArgumentParser(description="Hypergeometric odds for decks, bags and shuffled pools.")
     sub = parser.add_subparsers(dest="mode", required=True)
-
     at_least = sub.add_parser("at-least", help="P(at least NEED copies among the cards seen)")
     by_turn = sub.add_parser("by-turn", help="P(at least NEED copies) for turns 1..N, on play and draw")
     min_copies = sub.add_parser("min-copies", help="smallest number of copies reaching TARGET probability")
     hand = sub.add_parser("hand", help="P(opening hand has FROM..TO copies)")
     for mode in (at_least, by_turn, min_copies, hand):
-        mode.add_argument("--deck", type=positive, required=True, help="deck size")
+        mode.add_argument("--deck", type=int_in(1, MAX_DECK), required=True, help="deck or pool size")
     for mode in (at_least, by_turn, hand):
-        mode.add_argument("--copies", type=non_negative, required=True, help="copies or resource cards")
+        mode.add_argument("--copies", type=int_in(0, MAX_DECK), required=True, help="copies of what you need")
     for mode in (at_least, by_turn, min_copies):
-        mode.add_argument("--need", type=positive, default=1, help="how many copies are needed (default 1)")
-    add_seen_options(at_least)
-    add_seen_options(min_copies)
+        mode.add_argument("--need", type=int_in(1, MAX_DECK), default=1, help="how many copies are needed (default 1)")
+    add_draw_options(at_least, with_turn=True)
+    add_draw_options(min_copies, with_turn=True)
+    add_draw_options(by_turn, with_turn=False)
+    add_draw_options(hand, with_turn=False)
     min_copies.add_argument("--target", type=float, default=0.9, help="probability to reach (default 0.9)")
-    by_turn.add_argument("--turns", type=positive, default=10)
-    by_turn.add_argument("--hand", type=non_negative, default=7)
-    by_turn.add_argument("--draws-per-turn", type=non_negative, default=1)
-    hand.add_argument("--hand", type=non_negative, default=7)
-    hand.add_argument("--from", dest="low", type=non_negative, required=True)
-    hand.add_argument("--to", dest="high", type=non_negative, required=True)
+    by_turn.add_argument("--turns", type=int_in(1, MAX_TURNS), default=10)
+    hand.add_argument("--from", dest="low", type=int_in(0, MAX_DECK), required=True)
+    hand.add_argument("--to", dest="high", type=int_in(0, MAX_DECK), required=True)
     args = parser.parse_args(argv)
 
     if getattr(args, "copies", 0) > args.deck:
         parser.error("--copies cannot exceed --deck")
+    if getattr(args, "need", 0) > args.deck:
+        parser.error("--need cannot exceed --deck")
 
     if args.mode == "at-least":
         seen = resolve_seen(at_least, args)
@@ -113,15 +111,16 @@ def main(argv=None):
         for copies in range(args.need, args.deck + 1):
             p = p_at_least(args.deck, copies, seen, args.need)
             if p >= args.target:
-                print(f"{copies} copies: P(>= {args.need} in {seen} cards seen) = {p:.1%} >= {args.target:.0%}")
+                print(f"{copies} copies: P(>= {args.need} in {seen} cards seen) = {p:.1%} >= {args.target:.1%}")
                 break
         else:
-            print(f"unreachable: even {args.deck} copies stay below {args.target:.0%}")
+            print(f"unreachable: with {seen} cards seen even {args.deck} copies stay below {args.target:.1%}")
             return 1
     else:
         if args.low > args.high:
             parser.error("--from must not exceed --to")
-        p = p_between(args.deck, args.copies, args.hand, args.low, args.high)
+        p = (p_at_least(args.deck, args.copies, args.hand, args.low)
+             - p_at_least(args.deck, args.copies, args.hand, args.high + 1))
         print(f"P({args.low}..{args.high} of {args.copies} in a {args.hand}-card hand, deck {args.deck}) = {p:.1%}")
     return 0
 
