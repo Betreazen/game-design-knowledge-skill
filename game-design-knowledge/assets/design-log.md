@@ -6,13 +6,14 @@
 
 | Дата | Версия стенда (`--meta`) | Партий | Файл метрик | Метрики вне коридора |
 | --- | --- | --- | --- | --- |
-| ГГГГ-ММ-ДД | sim=v1, bots=greedy,mcts, seeds=1-5000 | 5000 | `metrics/before.json` | `rate:win@went_first=true` 56,8% |
+| ГГГГ-ММ-ДД | sim=runs, bots=greedy, seeds=1-3000 | 3000 | `metrics/before.json` | `rate:win@character=rogue` 0,5%, `rate:win@character=warrior` 42,7% |
 
 ## Гипотезы
 
 | Дата | Гипотеза | Тип | Источник | Метрика | До | После | Вердикт `metrics_compare.py` | Плейтест | Решение |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| ГГГГ-ММ-ДД | Монета второму игроку (+1 ресурс один раз) | правило | mechanics-patterns.md, Б1 | `rate:win@went_first=true` | 56,8% | 51,8% | better, без worse | не нужен | слита |
+| ГГГГ-ММ-ДД | Разбойнику +10 здоровья и +1 броня | данные | systems-balance.md, боевая математика | `rate:win@character=rogue` | 0,5% | 8,6% | better, без worse | не нужен | слита |
+| ГГГГ-ММ-ДД | Монета второму игроку в дуэли | правило | mechanics-patterns.md, Б1 | `rate:win@went_first=true` | 72,5% | 57,8% | better, но 5 × worse | не нужен | отклонена |
 | | | данные / правило / интерфейс / обучение | | | | | | | слита / отклонена |
 
 ## Отклонённые идеи и почему

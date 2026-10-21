@@ -2,20 +2,21 @@
 """Сводит логи симуляций или плейтестов (JSONL) в метрики дизайна.
 
 Запуск:
-  python3 design_metrics.py runs.jsonl --rate win --num turns --by deck --by deck,opp_deck \
+  python3 design_metrics.py runs.jsonl --rate win --num turns --by pick --by pick,opp_pick \
       --meta sim=v3 --meta seeds=1-5000 --out metrics/before.json
 
 Вход: одна строка JSONL = одна партия, забег или сессия. Поля проект выбирает сам.
-  --rate ПОЛЕ  доля: значения true/false или 1/0 (например, win, first_player_won, finished_tutorial)
-  --num ПОЛЕ   число: медиана, квартили, p10/p90 (например, turns, duration_s, gold_at_day_7)
-  --by ПОЛЯ    разрез по одному полю или паре через запятую (deck; deck,opp_deck — матрица матчапов)
+  --rate ПОЛЕ  доля: значения true/false или 1/0 (например, win, completed, finished_tutorial)
+  --num ПОЛЕ   число: медиана, квартили, p10/p90 (например, turns, duration_s, attempts, gold)
+  --by ПОЛЯ    разрез по одному полю или паре через запятую (pick, level, character;
+               pick,opp_pick — матрица матчапов)
   --meta K=V   условия прогона: версия симулятора, боты, seed-диапазон. metrics_compare.py
                предупредит, если они различаются между базовой линией и повторным замером.
   --min-n N    группы меньше N помечаются low_n (по умолчанию 30)
 
 Выход — JSON для metrics_compare.py. Ключи метрик:
-  rate:win, rate:win@deck=Aggro, num:turns@deck=Aggro,opp_deck=Control,
-  spread:win@deck — разница между лучшей и худшей группой по доле.
+  rate:win, rate:win@pick=Aggro, num:turns@pick=Aggro,opp_pick=Control, rate:completed@level=1-3,
+  spread:win@pick — разница между лучшей и худшей группой по доле.
 Доли идут с 95% доверительным интервалом Уилсона. Код выхода: 0 — успех, 2 — ошибка ввода.
 """
 

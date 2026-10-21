@@ -1,15 +1,15 @@
 ---
 name: game-design-knowledge
-description: Knowledge base and workflow for game design in any genre — concept, design pillars, prototyping, GDD and feature specs for programmers and AI agents, systems design, balance math, economy and progression, card games and CCG, roguelikes, level and narrative design, playtesting, metrics and automated balance simulation with bots, design review, UX, onboarding and accessibility, plus engine-agnostic gameplay architecture (rules engines, data-driven design, determinism, game AI). Use when designing or reviewing a game or game system, writing a GDD, one-pager or spec, balancing cards, units or economy, setting design targets, planning or analyzing playtests, building a balance simulator, fixing problems like first-player advantage, snowballing or mana screw, or picking game design books. Includes a curated library with sources, a symptom-to-solution table, templates, metrics scripts and a pipeline with simulations, review and evidence-based iteration.
+description: Knowledge base and workflow for designing any game in any genre — action, shooters, RPG, strategy, platformers, puzzles, racing, sports, roguelikes, card and board games, MMO, mobile, VR. Covers concept and pillars, prototyping, GDD and specs for programmers and AI agents, systems and combat math, balance, economy and progression, level, narrative and UI/UX design, procedural generation, playtesting, metrics and bot-driven balance simulation, design review, onboarding and accessibility, AI-assisted design, and engine-agnostic gameplay architecture. Use when designing, reviewing or balancing a game or game system, writing a GDD or spec, setting design targets, planning or analyzing playtests, building a simulation or telemetry stand, fixing design problems such as dominant strategies, difficulty spikes or snowballing, or picking game design books. Includes sourced references, a symptom-to-solution table, templates, metrics scripts, toy simulators and a measured design pipeline.
 ---
 
 # Геймдизайн: библиотека знаний и пайплайн
 
-Скилл помогает проектировать, документировать, балансировать и улучшать игры любого жанра, а также связывать дизайн с кодом. Внутри четыре вещи:
+Скилл помогает проектировать, документировать, балансировать и улучшать игру любого жанра и масштаба и связывать дизайн с кодом. Он не привязан к жанру, движку или платформе. Внутри четыре вещи:
 
-1. **Библиотека знаний.** Книги, статьи, доклады GDC, исследования и разборы игр по категориям. Каждый источник дан со ссылкой, автором, годом и пояснением, зачем его читать. Главная таблица — «симптом → решение → источник» в [mechanics-patterns.md](references/mechanics-patterns.md).
-2. **Шаблоны документов** в [assets/](assets/): one-sheet с опорами, спецификация фичи для программиста и ИИ-агента, бриф прототипа, план плейтеста, журнал дизайна, пример целевых коридоров метрик.
-3. **Скрипты замеров** в [scripts/](scripts/): сводка логов симуляций и плейтестов в метрики, сравнение базовой линии с повторным замером по целевым коридорам, расчёт числа партий.
+1. **Библиотека знаний.** Книги, статьи, доклады GDC, исследования и разборы игр по категориям. У каждого источника есть ссылка, автор, год и пояснение, зачем его читать. Главная таблица — «симптом → решение → источник» в [mechanics-patterns.md](references/mechanics-patterns.md).
+2. **Шаблоны** в [assets/](assets/): one-sheet с опорами, спецификация фичи для программиста и ИИ-агента, бриф прототипа, план плейтеста, журнал дизайна, стартовые целевые коридоры метрик [по типам игр](assets/targets/README.md).
+3. **Скрипты** в [scripts/](scripts/): замеры и сравнение метрик, расчёт выборки, вероятности колод и пулов, кривая стоимости, равновесие меты, два учебных стенда.
 4. **Пайплайн.** Порядок работы: опрос, концепт и целевые метрики, прототип, спецификация, тесты правил, измерительный стенд, базовый замер, ревью кода и дизайна, поиск решений в библиотеке, изменения и повторный замер.
 
 Состояние знаний — октябрь 2026.
@@ -18,24 +18,33 @@ description: Knowledge base and workflow for game design in any genre — concep
 
 | Задача | Файл |
 | --- | --- |
-| Новая игра, система или цикл баланса: порядок работы | [references/pipeline.md](references/pipeline.md) |
-| Метрика вне коридора, жалоба плейтестеров, проблема дизайна: найти решение с источником | [references/mechanics-patterns.md](references/mechanics-patterns.md) — начните с таблиц по категориям |
+| Новая игра, система или цикл баланса: порядок работы, схема стенда, учебные прогоны | [references/pipeline.md](references/pipeline.md) |
+| Метрика вне коридора, жалоба плейтестеров, проблема дизайна: найти решение с источником | [references/mechanics-patterns.md](references/mechanics-patterns.md) — начните с навигатора по типам игр |
 | Фреймворки (MDA, линзы, петли, мотивация, game feel), вопросы для ревью | [references/foundations.md](references/foundations.md) |
-| Баланс, кривые стоимости, вероятности, петли обратной связи, экономика, прогрессия, рейтинг, числовые ориентиры | [references/systems-balance.md](references/systems-balance.md) |
-| Плейтесты, опросники, телеметрия, каталог метрик, симуляция баланса ботами, статистика | [references/playtesting-metrics.md](references/playtesting-metrics.md) |
-| Ревью дизайна: опоры, эвристики играбельности, обучение, доступность | [references/design-review.md](references/design-review.md) |
-| One-sheet, опоры, живой GDD, спецификация для агента, правила ККИ, ADR, прототипирование, этапы продакшна | [references/documentation.md](references/documentation.md) |
-| Архитектура кода игры: движок правил, data-driven, детерминизм и реплеи, игровой ИИ, сеть, тесты геймплея | [references/architecture-code.md](references/architecture-code.md) |
-| Особенности жанра: карточные игры, рогалики, уровни, нарратив, стратегии, экшен, головоломки, PvP, F2P, файтинги, MMO, симуляторы, хоррор, VR | [references/genres.md](references/genres.md) |
+| Баланс, боевая математика, кривые стоимости, вероятности, петли обратной связи, сложность, экономика, прогрессия, рейтинг, числовые ориентиры | [references/systems-balance.md](references/systems-balance.md) |
+| Плейтесты, опросники, телеметрия, метрики по типам игр, симуляция ботами, статистика | [references/playtesting-metrics.md](references/playtesting-metrics.md) |
+| Ревью дизайна: опоры, эвристики играбельности, обучение, доступность, чеклисты по типам игр | [references/design-review.md](references/design-review.md) |
+| Интерфейс и UX: HUD, читаемость, цвет и текст, меню, геймпад и тач, локализация, UI по жанрам, замеры интерфейса | [references/ux-ui.md](references/ux-ui.md) |
+| Процедурная генерация: техники, гарантии решаемости, оценка генератора, PCG по типам контента | [references/procedural-generation.md](references/procedural-generation.md) |
+| ИИ и ML в дизайне: LLM-агенты как плейтестеры, персоны, генерация контента с проверкой, агенты для кода и спецификаций, правила площадок | [references/ai-assisted-design.md](references/ai-assisted-design.md) |
+| One-sheet, опоры, живой GDD, спецификация для агента, правила и параметры систем, ADR, прототипирование, этапы продакшна | [references/documentation.md](references/documentation.md) |
+| Архитектура кода игры: системы способностей, движок правил пошаговых игр, data-driven, детерминизм и реплеи, игровой ИИ, сеть, тесты геймплея | [references/architecture-code.md](references/architecture-code.md) |
+| Особенности жанра: от шутеров, RPG, MOBA, стратегий и платформеров до карточных, рогаликов, гонок, спорта, выживания, MMO, мобильных и VR | [references/genres.md](references/genres.md) |
 | Что почитать, маршрут обучения по уровням и ролям | [references/books.md](references/books.md) |
 
 Каждый справочник начинается с оглавления. Читайте только нужный раздел, а не файл целиком.
 
 Скрипты (Python 3.10+, только стандартная библиотека; на Windows запускайте через `py`):
 
-- [scripts/design_metrics.py](scripts/design_metrics.py) — JSONL партий, забегов или сессий → метрики: доли с интервалом Уилсона, медианы и квантили, разрезы по полям, разброс между группами;
-- [scripts/metrics_compare.py](scripts/metrics_compare.py) — базовая линия против повторного замера и целевых коридоров: вердикты `better` / `worse` / `shifted` / `same`, код 1 при ухудшении;
-- [scripts/sample_size.py](scripts/sample_size.py) — сколько партий или игроков нужно для заданной точности.
+| Скрипт | Что делает |
+| --- | --- |
+| [design_metrics.py](scripts/design_metrics.py) | JSONL матчей, забегов, попыток уровней или сессий → метрики: доли с интервалом Уилсона, медианы и квантили, разрезы, разброс между группами |
+| [metrics_compare.py](scripts/metrics_compare.py) | Базовая линия против повторного замера и целевых коридоров: вердикты `better` / `worse` / `shifted` / `same`, код 1 при ухудшении |
+| [sample_size.py](scripts/sample_size.py) | Сколько матчей, забегов или игроков нужно для заданной точности |
+| [meta_equilibrium.py](scripts/meta_equilibrium.py) | Равновесие меты по матрице матчапов: какие персонажи, фракции или колоды жизнеспособны, какие доминируемы |
+| [cost_curve.py](scripts/cost_curve.py) | Кривая стоимости «цена ← характеристики» для юнитов, оружия, предметов, карт и объекты вне кривой |
+| [deck_odds.py](scripts/deck_odds.py) | Гипергеометрия: шанс увидеть нужное в колоде, мешке или пуле к ходу N, сколько копий нужно |
+| [example_runs_sim.py](scripts/example_runs_sim.py), [example_sim.py](scripts/example_sim.py) | Учебные стенды: забеги рогалика и дуэль 1×1, пишут JSONL по схеме пайплайна; шаблоны своего стенда |
 
 ## Как работать
 
@@ -56,6 +65,8 @@ description: Knowledge base and workflow for game design in any genre — concep
 
 Для одной балансной правки хватает короткого режима из того же файла: карточка гипотезы, правка, замер до и после, запись в журнал.
 
+**Подбирайте стенд под игру.** В пошаговых, системных и экономических играх много даёт симуляция ботами. В экшене, гонках и открытых мирах честный бот дорог: там стенд меряет отдельные системы (бой, экономику, генерацию), а сложность и ощущения — телеметрия и плейтесты. Схемы строк JSONL для разных типов игр — в [pipeline.md](references/pipeline.md#этап-7-измерительный-стенд).
+
 **Когда пишете документ**, берите шаблон из [assets/](assets/) и правила из [documentation.md](references/documentation.md). Спецификация для агента должна быть самодостаточной: правила в шаблонах «When / If / While», примеры «Given / When / Then», вне скоупа, критерии приёмки со сквозной проверкой.
 
 **Когда решаете проблему дизайна:**
@@ -64,20 +75,22 @@ description: Knowledge base and workflow for game design in any genre — concep
 - Начинайте с самой маленькой правки: числа в данных, затем правило, и только потом новая механика.
 - Принимайте правку, только если целевая метрика значимо приблизилась к коридору и ни одна метрика не ухудшилась. Это показывает `metrics_compare.py`.
 
-**Симуляция меряет баланс, люди меряют опыт.** Боты показывают доли побед, длину партий, разброс колод и экономику, но не скуку, понятность и удовольствие. Гипотезы про ощущения подтверждайте плейтестом. Агент не играет в игру сам. Всё, что требует человека, передавайте ему списком: что проверить и на что смотреть.
+**Симуляция меряет баланс, люди меряют опыт.** Боты показывают доли побед, длину матчей, разброс вариантов, кривую сложности и экономику, но не скуку, понятность и удовольствие. Гипотезы про ощущения подтверждайте плейтестом. Агент не играет в игру сам. Всё, что требует человека, передавайте ему списком: что проверить и на что смотреть.
 
 **При ревью** используйте чеклисты:
 
-- [design-review.md](references/design-review.md) — для дизайна, обучения и доступности;
+- [design-review.md](references/design-review.md) — дизайн, обучение, доступность, чеклисты по типам игр;
+- [ux-ui.md](references/ux-ui.md) — интерфейс;
 - [foundations.md](references/foundations.md) — вопросы по фреймворкам;
-- [architecture-code.md](references/architecture-code.md) — для кода игры.
+- [architecture-code.md](references/architecture-code.md) — код игры.
 
-Для языка и движка проекта используйте профильные скиллы, если они установлены: rust-knowledge, gdscript-knowledge, python-knowledge.
+Для языка и движка проекта используйте профильные скиллы, если они установлены.
 
 ## Правила использования библиотеки
 
 - **Ссылайтесь на источник.** Рекомендуя решение, давайте ссылку из справочника. Тогда пользователь может проверить совет, а решение не выглядит выдуманным.
 - **Учитывайте пометки.** `[устарело]` значит, что у материала есть замена, и она указана рядом. `[не проверено]` значит, что ссылку или факт не удалось подтвердить по первоисточнику; так и пишите в гипотезе и перепроверьте, прежде чем строить на нём решение.
-- **Числовые ориентиры — не стандарты.** Почти ни один первоисточник не задаёт норму вроде «доля побед первого хода 50 ± 3%». Коридоры ставит дизайнер по опорам, референсам и ориентирам из справочников, и помечает предположения.
+- **Не переносите решения между жанрами вслепую.** Приём, который работает в одном жанре (монета второму игроку, rubber banding, pity timer), в другом может ломать опоры. Сверяйтесь с разделом жанра в [genres.md](references/genres.md) и проверяйте замером.
+- **Числовые ориентиры — не стандарты.** Почти ни один первоисточник не задаёт норму вроде «доля побед 50 ± 3%». Коридоры ставит дизайнер по опорам, референсам и ориентирам из справочников и помечает предположения.
 - **Говорите о пробелах прямо.** Если в библиотеке нет ответа, так и скажите, а затем ищите в первоисточниках. Не выдавайте догадку за материал библиотеки.
 - **Следуйте решениям проекта.** Если в проекте уже есть опоры, правила, документы и журнал решений, советы библиотеки применяются в их рамках, а не поверх. Финальное слово по опорам и по тому, интересно ли играть, — за человеком.

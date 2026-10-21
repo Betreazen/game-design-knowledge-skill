@@ -1,0 +1,7 @@
+{
+  "num:gold@day=7":              {"min": 4000, "max": 8000, "stat": "median"},
+  "num:level@day=7":             {"min": 12, "max": 18, "stat": "median"},
+  "num:sink_ratio@day=7":        {"min": 0.8, "max": 1.0, "stat": "median"},
+  "rate:stuck@day=*":            {"max": 0.10},
+  "num:minutes_to_next_unlock":  {"max": 30, "stat": "p90"}
+}

@@ -1,0 +1,7 @@
+{
+  "rate:completed@level=1-*":    {"min": 0.90},
+  "rate:completed@level=*":      {"min": 0.60},
+  "num:attempts@level=*":        [{"max": 8, "stat": "median"}, {"max": 25, "stat": "p90"}],
+  "rate:quit_on_level@level=*":  {"max": 0.10},
+  "num:time_s@level=*":          {"better": "lower", "stat": "p90"}
+}

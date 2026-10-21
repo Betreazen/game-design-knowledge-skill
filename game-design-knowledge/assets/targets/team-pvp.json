@@ -1,0 +1,9 @@
+{
+  "rate:win@side=*":             {"min": 0.48, "max": 0.52},
+  "rate:win@pick=*":             {"min": 0.45, "max": 0.55},
+  "spread:win@pick":             {"max": 0.10},
+  "rate:win@mmr_gap=large":      {"max": 0.65},
+  "rate:comeback":               {"min": 0.20},
+  "num:duration_min@side=blue":  {"min": 20, "max": 35, "stat": "median"},
+  "rate:abandon":                {"max": 0.03}
+}

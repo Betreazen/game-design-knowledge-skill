@@ -19,7 +19,7 @@
 - [13. Подкасты](#13-подкасты)
 - [14. Маршрут чтения по уровням](#14-маршрут-чтения-по-уровням)
 - [15. Маршрут по ролям](#15-маршрут-по-ролям)
-- [16. Маршрут для ККИ](#16-маршрут-для-кки)
+- [16. Маршруты по жанрам](#16-маршруты-по-жанрам)
 - [17. Расхождения и пробелы](#17-расхождения-и-пробелы)
 
 ## 1. Как пользоваться
@@ -39,9 +39,9 @@
 | 2 | [Game Design Workshop: A Playcentric Approach](https://www.routledge.com/Game-Design-Workshop-A-Playcentric-Approach-to-Creating-Innovative-Games/Fullerton/p/book/9781032607009) | Tracy Fullerton, CRC, 5th ed., 2024 | Процесс: прототип, плейтест, итерация, experience goals. Есть упражнения |
 | 3 | A Theory of Fun for Game Design | Raph Koster, O'Reilly, 2nd ed., 2013 | «Fun — прогресс в предсказании»; к ней есть пост-конспект 2025 года |
 | 4 | Designing Games: A Guide to Engineering Experiences | Tynan Sylvester, O'Reilly, 2013 | Эмоции из механик, elegance, skill range, нарратив из систем |
-| 5 | Characteristics of Games | Elias, Garfield, Gutschera, MIT Press, 2012 (мягкая обложка 2020) | Удача и мастерство, катч-ап, kingmaking, downtime. Для ККИ обязательна: соавтор — создатель Magic |
+| 5 | Characteristics of Games | Elias, Garfield, Gutschera, MIT Press, 2012 (мягкая обложка 2020) | Удача и мастерство, катч-ап, kingmaking, downtime. Общая теория для соревновательных, пошаговых, настольных и карточных игр; соавтор — Richard Garfield, создатель Magic |
 | 6 | Game Balance | Ian Schreiber, Brenda Romero, CRC, 2021 | Числа, кривые стоимости, транзитивность, таблицы. Главный практический справочник по балансу |
-| 7 | Building Blocks of Tabletop Game Design: An Encyclopedia of Mechanisms | Geoffrey Engelstein, Isaac Shalev, CRC, 3rd ed., 27.07.2026 | Энциклопедия механик, включая карточные, порядок хода и неопределённость |
+| 7 | Building Blocks of Tabletop Game Design: An Encyclopedia of Mechanisms | Geoffrey Engelstein, Isaac Shalev, CRC, 3rd ed., 27.07.2026 | Энциклопедия механизмов: порядок хода, действия, неопределённость, экономика, аукционы, контроль областей. Многие механизмы переносятся в цифровые стратегии, рогалики и карточные игры |
 | 8 | Game Feel: A Game Designer's Guide to Virtual Sensation | Steve Swink, Morgan Kaufmann, 2008/2009 (перепечатка CRC 2017). 2-го издания нет | Единственная полноценная книга про ощущение управления |
 
 ## 3. Общий геймдизайн
@@ -66,8 +66,8 @@
 
 | Книга | Автор, год, издание | Зачем читать |
 | --- | --- | --- |
-| Game Balance | Schreiber, Romero, CRC, 2021 | Транзитивный и интранзитивный баланс, cost curve для карт, вероятность колод, прогрессия PvE, таблицы. Для ККИ сначала главы про cost curves и интранзитивность |
-| Building Blocks of Tabletop Game Design ([каталог Routledge](https://www.routledge.com/games-animation/games/design)) | Engelstein, Shalev, CRC, 3rd ed., 27.07.2026 | У каждой механики схема, примеры и соображения реализации. Карточные механики, порядок хода, неопределённость |
+| Game Balance | Schreiber, Romero, CRC, 2021 | Транзитивный и интранзитивный баланс, кривые стоимости (cost curve), вероятность, прогрессия PvE, таблицы. Начинайте с глав под свой жанр: кривые стоимости — для юнитов, предметов и карт; интранзитивность — для PvP и стратегий; прогрессия — для RPG и F2P |
+| Building Blocks of Tabletop Game Design ([каталог Routledge](https://www.routledge.com/games-animation/games/design)) | Engelstein, Shalev, CRC, 3rd ed., 27.07.2026 | У каждой механики схема, примеры и соображения реализации. Порядок хода, действия, неопределённость, экономика, карточные механики |
 | Characteristics of Games | Elias, Garfield, Gutschera, MIT Press, 2012 | Сравнение игр по чертам: удача и мастерство, «чистая» и «грязная» информация, катч-ап. Прямо применима к турнирному балансу |
 | Game Mechanics: Advanced Game Design | Ernest Adams, Joris Dormans, New Riders, 2012 | Экономика как ресурсные потоки: источники, стоки, конвертеры, обратные связи. Нотация Machinations. Обязательна системному дизайнеру |
 | [Advanced Game Design: A Systems Approach](https://www.informit.com/store/advanced-game-design-a-systems-approach-9780134669458) | Michael Sellers, Addison-Wesley, 2017 (©2018). 2-го издания нет | Системное мышление, петли, эмерджентность; сильные главы про экономику и прогрессию |
@@ -201,7 +201,7 @@
 | [Game Developer](https://www.gamedeveloper.com/) | Informa, бывш. Gamasutra | Архив классики и постмортемов |
 | [Lostgarden](https://lostgarden.com/) | Daniel Cook, активен в 2025 | Skill atoms, социальный дизайн, прототипирование |
 | [raphkoster.com](https://www.raphkoster.com/) | Raph Koster, активен в 2025 | Слайды докладов, подборка «Recommended posts, 2017-2025» |
-| [Making Magic](https://magic.wizards.com/en/news/making-magic) | Mark Rosewater, активна в 2026 | Еженедельная колонка о дизайне сетов, механик, ключевых слов. Лучший постоянный источник для ККИ |
+| [Making Magic](https://magic.wizards.com/en/news/making-magic) | Mark Rosewater, активна в 2026 | Еженедельная колонка о дизайне сетов, механик, ключевых слов. Лучший постоянный источник о дизайне игры, которая годами выходит с новым контентом; примеры карточные |
 | [keithburgun.net](https://keithburgun.net/) | Keith Burgun | Серия «3 Minute Game Design», полемичная системная теория |
 | [Machinations](https://machinations.io/about) | Joris Dormans — создатель и сооснователь; коммерческий сервис | Визуальная симуляция экономики по Adams & Dormans |
 
@@ -260,15 +260,89 @@
 | Исследователь игроков (GUR) | Bromley → Drachen, Mirza-Babaei, Nacke, Games User Research → Hodent, The Gamer's Brain → Stahlke & Mirza-Babaei, The Game Designer's Playbook |
 | Дизайнер-программист | Swink → «Juice it or lose it» и «The art of screenshake» → Adams & Dormans (симуляция экономики) → Zubek → Togelius, Playing Smart → Lemarchand → Hodent (UX, читаемость). Код игры — [architecture-code.md](architecture-code.md) |
 
-## 16. Маршрут для ККИ
+## 16. Маршруты по жанрам
+
+Короткие маршруты на 3–5 позиций поверх общего маршрута из [раздела 14](#14-маршрут-чтения-по-уровням). Принципы, ошибки, метрики и полные списки источников каждого жанра — в [genres.md](genres.md). Источники других жанров (файтинги, кооперативные, симуляторы, хоррор, VR) — там же.
+
+### Экшен и шутеры
+
+1. Swink, Game Feel: модель ощущения управления, время отклика, кривые движения.
+2. Nijman, [«The art of screenshake»](https://www.youtube.com/watch?v=AJdEqssNZ-U), 2013, и Jonasson & Purho, [«Juice it or lose it»](https://www.youtube.com/watch?v=Fy0aCDmgnxg), 2012: отклик на выстрел, попадание и смерть.
+3. Loudy, Campbell, [«Embracing Push Forward Combat in DOOM»](https://gdcvault.com/play/1024940/Embracing-Push-Forward-Combat-in), GDC 2018: роли врагов и ресурсы, которые толкают игрока в атаку.
+4. Rogers, Level Up!, 3rd ed., 2024: камера, управление, враги, боссы, уровни.
+5. Taylor, [«Ten Principles for Good Level Design»](https://www.youtube.com/watch?v=iNEe3KhMvXM), GDC 2013: навигация, ясные цели, риск и награда в пространстве боя.
+
+### RPG
+
+1. Schreiber & Romero, Game Balance: прогрессия PvE, кривые опыта, урона и стоимости. Применение — [systems-balance.md](systems-balance.md).
+2. Adams & Dormans, Game Mechanics: экономика золота и лута как ресурсные потоки, источники и стоки.
+3. Joshua Sawyer, [«Do (Say) The Right Thing»](https://gdcvault.com/play/1015758/Do-(Say)-The-Right-Thing), GDC 2012, бесплатно в GDC Vault: структура диалоговых деревьев за десять лет, от Fallout до New Vegas.
+4. David Brevik, [«Classic Game Postmortem: Diablo»](https://gdcvault.com/play/1023469/Classic-Game-Postmortem), GDC 2016: как пошаговая задумка стала экшен-RPG; запись GDC выложила и на YouTube.
+5. Matt Barton, Shane Stacks, *Dungeons and Desktops: The History of Computer Role-Playing Games*, 2nd ed., CRC, ©2019: история жанра и его конвенций, от мейнфреймов до инди и мобильных RPG.
+
+### Стратегии и 4X
+
+1. Meier, [«Interesting Decisions»](https://www.gdcvault.com/play/1015756/Interesting), GDC 2012: что делает решение интересным, информация и темп.
+2. Soren Johnson, колонки Design of the Times: [«Seven Deadly Sins for Strategy Games»](http://www.designer-notes.com/?p=106), [«Water Finds a Crack»](https://www.designer-notes.com/game-developer-column-17-water-finds-a-crack/), [«Theme is Not Meaning»](http://www.designer-notes.com/?p=237).
+3. [Sid Meier's Memoir!](https://wwnorton.com/books/9781324005872), W. W. Norton, 2020: уроки Civilization и Pirates!.
+4. Matthew Davis, [«'Into the Breach' Design Postmortem»](https://www.gdcvault.com/play/1025772/), GDC 2019: тактика с полной информацией.
+5. Characteristics of Games: катч-ап, kingmaking и downtime в мультиплеерных стратегиях.
+
+### Платформеры и экшен-адвенчуры
+
+1. Maddy Thorson, [«Celeste & Forgiveness»](https://maddymakesgames.com/articles/celeste_and_forgiveness/index.html): механики прощения ввода как чеклист.
+2. Nutt, интервью с Hayashida, [«The Structure of Fun»](https://www.gamedeveloper.com/design/the-structure-of-fun-learning-from-i-super-mario-3d-land-i-s-director), 2012, и GMTK, [«Super Mario 3D World's 4 Step Level Design»](https://www.youtube.com/watch?v=dBmIkEvEBtA), 2015: одна механика на уровень. Выжимка — [foundations.md](foundations.md#15-kishōtenketsu-одна-механика-на-уровень).
+3. Swink, Game Feel: прыжок, инерция, отклик.
+4. Totten, An Architectural Approach to Level Design, 2nd ed.: навигация и эмоциональные пространства.
+5. Bycer, Game Design Deep Dive: Metroidvania, CRC, 2025 (содержание `[не проверено]`).
+
+### Головоломки
+
+1. GMTK, [«What Makes a Good Puzzle?»](https://www.youtube.com/watch?v=zsjC6fa_YBg), 2018: пазл вокруг одного озарения.
+2. Blow, ten Bosch, [«Designing to Reveal the Nature of the Universe»](https://marctenbosch.com/news/?p=181), IndieCade 2011: пазл раскрывает свойства системы.
+3. Arvi Teikari, [«Understanding the rules of Baba Is You»](https://gamedeveloper.com/design/video-understanding-the-rules-of-i-baba-is-you-i-), GDC 2020: правила как объекты игры.
+4. Интервью с Alan Hazelden о [A Monster's Expedition](https://www.gamedeveloper.com/game-platforms/the-relaxing-open-world-puzzle-design-of-i-a-monster-s-expedition-i-), Game Developer, 2021: одно обязательное взаимодействие на пазл, пазлы в открытом мире.
+5. [PuzzleScript](https://www.puzzlescript.net/): быстрые прототипы сеточных пазлов.
+
+### Рогалики
+
+1. [Berlin Interpretation](https://www.roguebasin.com/index.php/Berlin_Interpretation), 2008: факторы жанра как спектр.
+2. Derek Yu, [Spelunky](https://bossfightbooks.com/products/spelunky-by-derek-yu), Boss Fight Books, 2016, и Darius Kazemi, [Spelunky Generator Lessons](http://tinysubversions.com/spelunkyGen/): генерация с гарантированным путём.
+3. Short & Adams (ред.), [Procedural Generation in Game Design](https://emshort.blog/2017/06/08/procedural-generation-in-game-design/), CRC, 2017: генерация карт, предметов и историй.
+4. Josh Ge, [Grid Sage Games blog](https://www.gridsagegames.com/blog/): мастерство, food clocks, статичный и процедурный контент.
+5. Kasavin, Korb, [«Dive into the dialogue of Hades»](https://gdconf.com/news/dive-dialogue-hades-gdc-2021), GDC 2021: смерть как нарративное событие.
+
+### Карточные и настольные
 
 1. Characteristics of Games: удача и мастерство, катч-ап, дистанция.
-2. Game Balance: cost curves и интранзитивность. Применение — [systems-balance.md](systems-balance.md).
-3. Rosewater: GDC 2016 и колонка Making Magic, особенно резонанс и бюджет сложности.
-4. Building Blocks, 3rd ed.: карточные механики, порядок хода, неопределённость.
-5. Meier, «Interesting Decisions»: тест auto-include и unplayable карт.
-6. Sheahan, Licensed Tabletop Games (2026): лицензии и IP, если игра по чужой франшизе.
-7. Дальше: Engelstein, Achievement Relocked (восприятие честности); жанровые решения — [genres.md](genres.md).
+2. Game Balance: кривые стоимости и интранзитивность. Применение — [systems-balance.md](systems-balance.md).
+3. Building Blocks, 3rd ed.: порядок хода, неопределённость, карточные механики.
+4. Rosewater, [«Twenty Years, Twenty Lessons»](https://www.gdcvault.com/play/1023186/), GDC 2016, и колонка [Making Magic](https://magic.wizards.com/en/news/making-magic): резонанс, бюджет сложности, дизайн сетов. Выжимка — [foundations.md](foundations.md#16-уроки-rosewater-двадцать-лет-дизайна-magic).
+5. The Kobold Guide to Board Game Design (ред. Mike Selinker, 2011) и Vaccarino, [«The Secret History of Dominion»](https://dominionstrategy.com/2013/06/24/the-secret-history-of-dominion/), 2013: эссе и дизайн-дневник настольного хита. Для игры по чужой франшизе — Sheahan, Licensed Tabletop Games (2026).
+
+### Онлайн, MMO и live service
+
+1. Bartle, [«Hearts, Clubs, Diamonds, Spades»](https://mud.co.uk/richard/hcds.htm), 1996: типы игроков и динамика популяции.
+2. Koster, [«The Laws of Online World Design»](https://www.raphkoster.com/games/laws-of-online-world-design/the-laws-of-online-world-design/): экономика, владение, размер сообщества.
+3. Bartle, Designing Virtual Worlds, New Riders, 2003 (переиздание CRC, 2025): учебник по онлайн-мирам.
+4. Jeffrey Lin, [«The Science Behind Shaping Player Behavior in Online Games»](https://www.gdcvault.com/play/1017940/), GDC 2013: токсичность и поведение игроков.
+5. Cook, [«Kind Games»](https://lostgarden.com/2024/06/28/kind-games-the-gdc-talk/), GDC 2024: просоциальный мультиплеер. Для соревновательных режимов — Sirlin, [Playing to Win](https://www.sirlin.net/ptw).
+
+### Мобильные и F2P
+
+1. Will Luton, Free-to-Play: Making Money From Games You Give Away, New Riders, 2013: базовая экономика F2P.
+2. [Deconstructor of Fun](https://www.deconstructoroffun.com/): разборы мобильных хитов и live ops.
+3. Ben Brode, [«Designing MARVEL SNAP»](https://gdcvault.com/play/1029024/Designing-MARVEL-SNAP), GDC 2023: игра под короткую мобильную сессию.
+4. Shokrizade, [«The Top F2P Monetization Tricks»](https://www.gamedeveloper.com/business/the-top-f2p-monetization-tricks), 2013, вместе с Hodent, The Gamer's Brain, 2nd ed. (этика монетизации): какие приёмы считаются тёмными и чем их заменить.
+5. Oscar Clark, Playing with Balance: Game Economy Design, CRC, 2026 (содержание `[не проверено]`).
+
+### Нарративные игры
+
+1. Heussner, Finley, Brandes Hepler, Lemay, The Game Narrative Toolbox, 2015: работа нарративного дизайнера от концепта до тестирования.
+2. Emily Short, [«Beyond Branching»](https://emshort.blog/2016/04/12/beyond-branching-quality-based-and-salience-based-narrative-structures/), 2016: структуры сверх дерева ветвлений.
+3. Smith, Worch, [«What Happened Here? Environmental Storytelling»](https://www.gdcvault.com/play/1012647/), GDC 2010: пространство как рассказчик.
+4. Ken Levine, [«Narrative Legos»](https://www.gdcvault.com/play/1020434/), GDC 2014: системный нарратив.
+5. Nicklin, Writing for Games, 2022, или Short & Adams, Procedural Storytelling, 2019, по типу проекта; прототип — [ink](https://www.inklestudios.com/ink/) или [Twine](https://twinery.org/).
 
 ## 17. Расхождения и пробелы
 

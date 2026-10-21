@@ -3,17 +3,21 @@
 
 Запуск:
   python3 metrics_compare.py metrics/before.json metrics/after.json --targets design/targets.json
-  python3 metrics_compare.py before.json after.json --only "rate:win@deck=*" --holm --json diff.json
+  python3 metrics_compare.py before.json after.json --only "rate:win@pick=*" --holm --json diff.json
 
 Файл целей (targets.json) задаёт для метрик коридор и/или желаемое направление.
 Ключ — шаблон имени метрики (fnmatch), побеждает первый подходящий:
   {
-    "rate:first_player_won": {"min": 0.47, "max": 0.53},
-    "rate:win@deck=*":       {"min": 0.45, "max": 0.55},
-    "spread:win@deck":       {"max": 0.10},
+    "rate:win@went_first=true": {"min": 0.47, "max": 0.53},
+    "rate:win@pick=*":       {"min": 0.45, "max": 0.55},
+    "spread:win@pick":       {"max": 0.10},
+    "rate:completed@level=*": {"min": 0.60},
     "num:turns":             {"min": 7, "max": 12, "stat": "median"},
+    "num:attempts@level=*":  [{"max": 8, "stat": "median"}, {"max": 25, "stat": "p90"}],
     "rate:finished_tutorial": {"better": "higher"}
   }
+Список коридоров у одного шаблона проверяет несколько статистик одной числовой метрики:
+каждая даёт свою строку с пометкой [stat].
 
 Значимость: доли — z-тест двух пропорций, числа — U-тест Манна — Уитни по сохранённым значениям
 (для любого "stat": он сравнивает распределения целиком, а коридор проверяется по выбранной статистике).
@@ -64,13 +68,16 @@ def load_targets(path):
     targets = read_json(path)
     if not isinstance(targets, dict):
         raise SystemExit(f"error: {path}: expected an object of pattern -> target")
-    for pattern, target in targets.items():
-        if not isinstance(target, dict) or not ({"min", "max", "better"} & set(target)):
-            raise SystemExit(f"error: {path}: {pattern}: expected an object with min, max or better")
-        if target.get("better") not in (None, "higher", "lower"):
-            raise SystemExit(f"error: {path}: {pattern}: better must be 'higher' or 'lower'")
-        if target.get("stat", "median") not in STATS:
-            raise SystemExit(f"error: {path}: {pattern}: stat must be one of {', '.join(sorted(STATS))}")
+    for pattern, value in targets.items():
+        items = value if isinstance(value, list) and value else [value]
+        for target in items:
+            if not isinstance(target, dict) or not ({"min", "max", "better"} & set(target)):
+                raise SystemExit(f"error: {path}: {pattern}: expected an object (or a list of objects) "
+                                 "with min, max or better")
+            if target.get("better") not in (None, "higher", "lower"):
+                raise SystemExit(f"error: {path}: {pattern}: better must be 'higher' or 'lower'")
+            if target.get("stat", "median") not in STATS:
+                raise SystemExit(f"error: {path}: {pattern}: stat must be one of {', '.join(sorted(STATS))}")
     return targets
 
 
@@ -118,11 +125,12 @@ def mann_whitney_p(xs, ys):
     return normal_p(max(z, 0.0))
 
 
-def find_target(key, targets):
+def find_targets(key, targets):
+    """Коридоры первого подходящего шаблона: список (один или несколько) или [None]."""
     for pattern, target in targets.items():
         if fnmatch.fnmatchcase(key, pattern):
-            return target
-    return None
+            return target if isinstance(target, list) else [target]
+    return [None]
 
 
 def stat_value(metric, target):
@@ -197,16 +205,21 @@ def compare(before, after, targets, alpha, min_change, only, holm):
             rows.append({"key": key, "missing": "before" if key not in b_metrics else "after"})
             continue
         b, a = b_metrics[key], a_metrics[key]
-        target = find_target(key, targets)
-        rows.append({
-            "key": key,
-            "kind": b["kind"],
-            "target": target,
-            "before": stat_value(b, target),
-            "after": stat_value(a, target),
-            "p": p_value(b, a),
-            "low_n": b.get("low_n", False) or a.get("low_n", False),
-        })
+        found = find_targets(key, targets)
+        p = p_value(b, a)
+        for target in found:
+            label = key
+            if len(found) > 1 and b["kind"] == "num":
+                label = f"{key} [{(target or {}).get('stat', 'median')}]"
+            rows.append({
+                "key": label,
+                "kind": b["kind"],
+                "target": target,
+                "before": stat_value(b, target),
+                "after": stat_value(a, target),
+                "p": p,
+                "low_n": b.get("low_n", False) or a.get("low_n", False),
+            })
     present = [r for r in rows if "missing" not in r]
     for row in present:
         row["p_adj"] = row["p"]

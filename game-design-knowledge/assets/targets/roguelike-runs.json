@@ -1,0 +1,8 @@
+{
+  "rate:win@character=*":        {"min": 0.05, "max": 0.25},
+  "spread:win@character":        {"max": 0.08},
+  "rate:died_on_floor_1":        {"max": 0.15},
+  "num:floor_reached":           {"min": 3, "max": 6, "stat": "median"},
+  "num:run_minutes":             {"min": 20, "max": 60, "stat": "median"},
+  "num:distinct_builds":         {"better": "higher"}
+}
