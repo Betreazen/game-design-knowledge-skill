@@ -137,7 +137,7 @@
 | Камбэк и муллиган | `rate:comeback`, `rate:win@mulligan=true` | Снежный ком; цена плохой стартовой руки |
 | Разнообразие меты | 1/Σp² и энтропия по доле `pick`; считается отдельно | Застой меты |
 
-Покарточный файл — строка на карту в колоде игрока в партии: `{"match", "card", "pick", "drawn", "played", "opening_hand", "win"}`. `rate:win@card=*,drawn=true` — аналог GIH WR (термин популяризировал 17lands `[не проверено]`), `rate:played@card=*` — мёртвая ли карта в руке. Для roguelike-deckbuilder — строка на карту в предложении `{"run", "act", "card", "picked", "run_win"}`: `rate:picked@card=*` против `rate:run_win@card=*,picked=true` даёт разрыв «берут, но проигрывают». Опрос «бесило ли играть против» — `rate:annoying@opp_pick=*`.
+Покарточный файл — строка на карту в колоде игрока в партии: `{"match", "card", "pick", "drawn", "played", "opening_hand", "win"}`. `rate:win@card=*,drawn=true` — аналог GIH WR, если `drawn` включает и стартовую руку (у 17lands это доля побед в партиях, где карта пришла в руку в стартовой руке или добором; [Metrics Definitions](https://www.17lands.com/metrics_definitions)), `rate:played@card=*` — мёртвая ли карта в руке. Для roguelike-deckbuilder — строка на карту в предложении `{"run", "act", "card", "picked", "run_win"}`: `rate:picked@card=*` против `rate:run_win@card=*,picked=true` даёт разрыв «берут, но проигрывают». Опрос «бесило ли играть против» — `rate:annoying@opp_pick=*`.
 
 Шаблоны коридоров: [card-duel.json](../assets/targets/card-duel.json) и [pvp-duel.json](../assets/targets/pvp-duel.json).
 
@@ -264,7 +264,7 @@
 | [Super Mario 3D World's 4 Step Level Design](https://www.youtube.com/watch?v=dBmIkEvEBtA) | Mark Brown, GMTK, 16.03.2015 | Видеоразбор того же принципа |
 | [Ten Principles for Good Level Design](https://www.youtube.com/watch?v=iNEe3KhMvXM) | Dan Taylor (Square Enix Montreal), GDC 2013; запись на канале GDC с 2018 | Десять принципов: интересная навигация, повествование без слов, ясные цели, риск и награда (перечень по конспектам слушателей) |
 | [Skyrim's Modular Approach to Level Design](https://www.gamedeveloper.com/design/skyrim-s-modular-approach-to-level-design) | Joel Burgess, Nate Purkeypile; GDC 2013, Level Design in a Day; текст 2013 | Семь наборов, больше 400 интерьеров, состав команды и сроки |
-| Half-Life 2 Developer Commentary | Valve, 2006–2007, в игре `[не проверено]` | Сигналы, направление взгляда, обучение без текста |
+| Комментарии разработчиков Half-Life 2 | Valve, в игре: Lost Coast (2005), Episode One (2006), Episode Two (2007); для самой Half-Life 2 — 3,5 ч в [обновлении к 20-летию](https://www.half-life.com/halflife2/20th) (2024) | Сигналы, направление взгляда, обучение без текста |
 
 ## 5. Нарративный дизайн
 
@@ -274,7 +274,7 @@
 - **Окружение и системы рассказывают сами.** Environmental storytelling: следы событий, выводы игрока (Smith & Worch, 2010). Системный нарратив из модульных «кирпичиков» (Ken Levine, Narrative Legos, 2014).
 - **Без лудонарративного диссонанса.** Механики и сюжет говорят одно (Clint Hocking, 2007).
 - **Инструменты для писателя.** ink и Yarn Spinner позволяют итерировать без программиста; Yarn Spinner поддерживает Godot.
-- **Сюжет в реиграбельном жанре.** Мета-нарратив (Inscryption) и нарратив через смерть (Hades) встраивают историю в повторяемые забеги; квесты открытого мира — в [разделе 30](#30-открытые-миры), выборы в приключениях — в [разделе 25](#25-приключения-point-and-click-и-визуальные-новеллы). Навыки как голоса-персонажи и провал как контент — Disco Elysium `[не проверено]`.
+- **Сюжет в реиграбельном жанре.** Мета-нарратив (Inscryption) и нарратив через смерть (Hades) встраивают историю в повторяемые забеги; квесты открытого мира — в [разделе 30](#30-открытые-миры), выборы в приключениях — в [разделе 25](#25-приключения-point-and-click-и-визуальные-новеллы). Навыки как голоса-персонажи и провал как контент — Disco Elysium: пассивные проверки звучат репликами навыков, а провал «красной» проверки разыгрывается как сцена (ZA/UM, devblog, 2016).
 
 ### Типичные ошибки
 
@@ -308,7 +308,7 @@
 | [Narrative Legos](https://www.gdcvault.com/play/1020434/) | Ken Levine, GDC 2014 | Системный нарратив |
 | [What Happened Here? Environmental Storytelling](https://www.gdcvault.com/play/1012647/) | Harvey Smith, Matthias Worch; GDC 2010 | Пространство как рассказчик |
 | [Hamlet on the Holodeck](https://en.wikipedia.org/wiki/Hamlet_on_the_Holodeck) | Janet H. Murray, 1997; 2-е изд. 2017 | Агентность, иммерсия, трансформация |
-| Disco Elysium: доклады и разборы | ZA/UM, 2019–2020 `[не проверено]` | Навыки как голоса, провал как контент |
+| [On skill checks](https://discoelysium.com/devblog/2016/09/19/on-skill-checks), [On active skill checks](https://discoelysium.com/devblog/2016/10/06/active-skill-checks) | ZA/UM, devblog Disco Elysium, 19.09 и 06.10.2016 | Навыки как голоса, белые и красные проверки, провал как контент |
 
 ## 6. Стратегии и тактика
 
@@ -317,7 +317,7 @@
 - **Интересные решения** (Sid Meier, GDC 2012). У каждого варианта есть цена. Плохие решения — очевидные, случайные и принимаемые без информации.
 - **Вода находит трещину** (Soren Johnson, 2011). Игроки оптимизируют и эксплуатируют любую дыру и не ценят своё время: отсюда микроменеджмент и гринд. Доминирующие стратегии ищут до релиза.
 - **Тема поддерживает, смысл в механике** (Johnson, Theme is Not Meaning).
-- **Детерминизм и полная информация** (Into the Breach: намерения врагов видны, поле 8×8, защита зданий вместо килл-рейса) против случайности с воспринимаемой справедливостью (XCOM `[не проверено]`; Johnson, Playing the Odds).
+- **Детерминизм и полная информация** (Into the Breach: намерения врагов видны, поле 8×8, защита зданий вместо килл-рейса) против случайности с воспринимаемой справедливостью (XCOM: Enemy Within на Easy и Normal скрыто прерывает серии промахов — Ananda Gupta, PCGamesN, 2013; Johnson, Playing the Odds).
 - **Борьба со снежным комом**: догоняющие механики, издержки расширения. Паттерны — [mechanics-patterns.md](mechanics-patterns.md#6-темп-и-длительность).
 
 ### Типичные ошибки
@@ -349,9 +349,9 @@
 | [Seven Deadly Sins for Strategy Games](http://www.designer-notes.com/?p=106), [Sid's Rules](http://www.designer-notes.com/?p=119), [Playing the Odds](http://www.designer-notes.com/?p=171), [When Choice is Bad](http://www.designer-notes.com/?p=609) | Soren Johnson, Design of the Times | Грехи стратегий, восприятие вероятностей, вредный выбор |
 | [Designer Notes](https://www.designer-notes.com/) | Soren Johnson, подкаст, 2014– | Интервью с дизайнерами о решениях |
 | [Interesting Decisions](https://www.gdcvault.com/play/1015756/) | Sid Meier, GDC 2012 | Игра как серия интересных решений |
-| [Sid Meier's Memoir!](https://wwnorton.com/books/9781324005872) | Sid Meier; W. W. Norton, 2020 (соавтор `[не проверено]`) | Уроки Civilization и Pirates! |
+| [Sid Meier's Memoir!](https://wwnorton.com/books/9781324005872) | Sid Meier при участии Jennifer Lee Noonan; W. W. Norton, ©2020 | Уроки Civilization и Pirates! |
 | ['Into the Breach' Design Postmortem](https://www.gdcvault.com/play/1025772/) | Matthew Davis, GDC 2019 | Полная информация, решения вместо догадок |
-| Доклады о XCOM: Enemy Unknown | Jake Solomon, Firaxis, около 2013 `[не проверено]` | Переосмысление классики, восприятие процентов попадания |
+| [The secret dice rolls of XCOM: Enemy Within](https://www.pcgamesn.com/secret-dice-rolls-xcom-enemy-within) | Steve Hogarty, интервью с Ananda Gupta (Firaxis); PCGamesN, 15.10.2013 | Скрытый прерыватель серий промахов, зерно ГСЧ против перезагрузок |
 
 ## 7. Экшен, платформеры, game feel
 
@@ -387,11 +387,11 @@
 | Источник | Автор, год | Зачем читать |
 | --- | --- | --- |
 | [Game Feel: A Game Designer's Guide to Virtual Sensation](https://www.routledge.com/Game-Feel-A-Game-Designers-Guide-to-Virtual-Sensation/Swink/p/book/9780123743282) | Steve Swink; CRC, ©2009 | Определение game feel и метрики отзывчивости |
-| [Celeste & Forgiveness](https://maddymakesgames.com/articles/celeste_and_forgiveness/index.html) | Maddy Thorson (оригинал на Medium, год `[не проверено]`) | Десять механик прощения — чек-лист платформера |
+| [Celeste & Forgiveness](https://maddymakesgames.com/articles/celeste_and_forgiveness/index.html) | Maddy Thorson; тред в Twitter 12.03.2020, на Medium 25.04.2022 | Десять механик прощения — чек-лист платформера |
 | [Juice It or Lose It](https://www.gdcvault.com/play/1016487/) | Martin Jonasson, Petri Purho; GDC Europe 2012 | Эффекты превращают прототип в «сочный» |
 | [The art of screenshake](https://www.youtube.com/watch?v=AJdEqssNZ-U) | Jan Willem Nijman, 2013 | Пошаговое усочнение шутера |
 | [Embracing Push Forward Combat in DOOM](https://gdcvault.com/play/1024940/Embracing-Push-Forward-Combat-in) | Kurt Loudy, Jake Campbell; GDC 2018, запись есть на канале GDC | Роли врагов и ресурсы, которые толкают вперёд |
-| Доклады и разборы God of War (2018) и Hollow Knight | `[не проверено]` | Камера и комбо; читаемость атак и честность урона |
+| [Доклады о God of War (2018) на GDC 2019](https://www.gamedeveloper.com/audio/-boy-does-gdc-2019-offer-more-great-i-god-of-war-i-talks-than-you-can-shake-an-axe-at-) | Mihir Sheth (Evolving Combat in 'God of War' for a New Perspective), Jason McDonald (Taking an Axe to 'God of War' Gameplay); список — Game Developer, 28.01.2019 | Бой под близкую камеру от третьего лица |
 
 ## 8. Головоломки
 
@@ -436,7 +436,7 @@
 - **Много жизнеспособных стратегий важнее идеального равенства** (Sirlin, Balancing Multiplayer Competitive Games, 2009). Это обязательное чтение для любой игры с соревновательным режимом.
 - **Рейтинг с неопределённостью.** Для дуэлей 1×1 подходят Glicko-2 (рейтинг, отклонение RD и волатильность; public domain) или OpenSkill (открытая альтернатива TrueSkill, быстрее, поддерживает несколько команд). Для команд — TrueSkill-класс; TrueSkill 2 учитывает индивидуальные показатели и быстрее калибрует новичков.
 - **Поведение формируется дизайном**: обратная связь о наказании, прайминг, прозрачность (Jeffrey Lin, Riot, 2013).
-- **Ranked anxiety** снижают видимым прогрессом, защитой от потери ранга и сменой режима. Это общая практика; первоисточник не найден `[не проверено]`.
+- **Страх рейтинговой игры** (ranked anxiety) снижают защитой от понижения и запасом после повышения ранга: так VALORANT ответил на жалобы, что один плохой день стоит большой потери ранга ([Ask VALORANT](https://playvalorant.com/en-us/news/dev/ask-valorant-dec-24/), Riot, 24.12.2020, патч 2.0).
 
 ### Типичные ошибки
 
@@ -529,7 +529,7 @@
 | [Deconstructor of Fun](https://www.deconstructoroffun.com/) | 2012–2026 | Разборы мобильных F2P и live ops |
 | [Designing for Free](http://www.designer-notes.com/?p=115), [The End of Games?](http://www.designer-notes.com/?p=372) | Soren Johnson | Взгляд дизайнера стратегий на F2P |
 | Getting Gamers: The Psychology of Video Games and Their Impact | Jamie Madigan; Rowman & Littlefield, 2015 | Мотивация, расписания подкреплений, когнитивные искажения |
-| Отчёт Бельгийской комиссии по азартным играм о лутбоксах | регулятор, 2018 `[не проверено]` | Основание бельгийского запрета |
+| [Research Report on Loot Boxes](https://www.gamingcommission.be/sites/default/files/2021-08/onderzoeksrapport-loot-boxen-Engels-publicatie.pdf) | Peter Naessens, секретариат Gaming Commission (Бельгия), апрель 2018; англ. перевод | Основание бельгийского запрета: Overwatch, Battlefront II, FIFA 18, CS:GO |
 | [Loot boxes in FIFA toch géén verboden kansspel](https://www.dirkzwager.nl/kennis/artikelen/loot-boxes-in-fifa-toch-geen-verboden-kansspel-dwangsom-onterecht-opgelegd) | Dirkzwager, 01.04.2022 (на нидерландском) | Разбор решения Государственного совета Нидерландов ECLI:NL:RVS:2022:690 по делу EA |
 
 ## 11. Мобильные и казуальные
@@ -553,7 +553,8 @@
 
 | Источник | Автор, год | Зачем читать |
 | --- | --- | --- |
-| Доклады и интервью о Pandemic и Forbidden Island | Matt Leacock, 2008– `[не проверено]` | Проблема альфа-игрока и лекарства |
+| [Cooperation and Engagement: What can board games teach us?](https://www.youtube.com/watch?v=cdTVcFo2EQw) | Matt Leacock, Google Tech Talk, 25.04.2008 | Кооперативные игры и вовлечённость |
+| Интервью Matt Leacock в Senet, Issue 10, 2023 | по пересказу с цитатами: [Derek Bruff, 14.04.2023](https://derekbruff.org/2023/04/14/alpha-players-and-in-class-group-work) | Три лекарства от альфа-игрока: скрытая информация, «злые» задачи, задачи с нюансами |
 | Building Blocks of Tabletop Game Design | Geoffrey Engelstein, Isaac Shalev; CRC, 1-е изд. 2019, 2-е 2022, актуальное 3-е — июль 2026 ([books.md](books.md)) | Энциклопедия механизмов, включая кооперативные структуры |
 | [Hanabi](https://en.wikipedia.org/wiki/Hanabi_(card_game)) | Antoine Bauza, 2010; Spiel des Jahres 2013 | Кооператив с ограниченной коммуникацией: свои карты не видны, подсказки стоят жетонов |
 
@@ -778,7 +779,7 @@ FPS и TPS, hero shooter, battle royale, extraction shooter. Ощущение с
 ### Ключевые принципы
 
 - **Баланс оружия живёт в мелких числах.** В Halo 3 минимальное время между выстрелами снайперской винтовки поменяли с 0,5 до 0,7 с. Это меньше стотысячной доли данных игры, но заметный сдвиг баланса. Мультиплеер Halo балансирует больше 1000 объектов, у одной винтовки больше 200 полей (Jaime Griesemer, GDC 2010). Правку оформляют гипотезой и проверяют, как любую другую.
-- **Сетевой код — часть дизайна.** Peeker's advantage: тот, кто выглядывает из-за угла, видит соперника раньше, потому что держащий позицию ещё не получил его движение. Вклад дают задержка, частота тиков сервера, буферизация и задержка вывода кадра. VALORANT целился в серверы 128 тиков для всех и пинг около 35 мс для 70% игроков (deWet, Straily, Riot, 28.07.2020). Компенсация задержки на сервере «отматывает» мир к моменту выстрела; цена — игрока иногда убивают уже за укрытием (Yahn Bernier, Valve, 2001 `[не проверено]`). Архитектура и сетевой код Overwatch — доклад Tim Ford (GDC 2017).
+- **Сетевой код — часть дизайна.** Peeker's advantage: тот, кто выглядывает из-за угла, видит соперника раньше, потому что держащий позицию ещё не получил его движение. Вклад дают задержка, частота тиков сервера, буферизация и задержка вывода кадра. VALORANT целился в серверы 128 тиков для всех и пинг около 35 мс для 70% игроков (deWet, Straily, Riot, 28.07.2020). Компенсация задержки на сервере «отматывает» мир к моменту выстрела; цена — игрока иногда убивают уже за укрытием (Yahn W. Bernier, Valve, 2001: пример, где игрока с малым пингом поражают уже за ящиком). Архитектура и сетевой код Overwatch — доклад Tim Ford (GDC 2017).
 - **Hero shooter: баланс по данным и восприятию.** VALORANT не добивается 50% у каждого агента: равные исходы делают решения шаблонными. Входы баланса — WR матчей, WR раундов атаки и защиты, доля выбора агентов, покупки оружия и регулярные опросы. «Ваше восприятие — ваша правда»: опросы объясняют данные, но не заменяют их. Для агента, карты и стороны есть внутренние границы. Raze с WR около 51% (53,5% без зеркал) не выходила за них, и команда поняла, что сила видна в десятых долях процента, а не в целых (David Cole, 26.06.2020). Каждая правка сохраняет тактический цикл «разведка, план, исполнение».
 - **Battle royale: зона и неравная добыча задают темп.** PUBG: до 100 игроков прыгают с самолёта, «синяя стена» сужает зону и сталкивает игроков. Города богаче добычей, но опаснее в начале; глушь беднее, но спокойнее. Значения спавна предметов настраивали всю разработку (Game Developer, 27.04.2017). Fortnite Battle Royale вырос из разворота после успеха PUBG (Paul Gadi, 2017).
 - **Extraction: ставка — снаряжение.** Потеря снаряжения при провале создаёт напряжение, но игрок должен хотеть вернуться в рейд даже после потери (разработчики Escape from Duckov, 2025). Читы бьют по такому жанру сильнее всего: The Cycle: Frontier закрыли после всплеска читерства, которое увело игроков (2023). Авторитет — на сервере ([architecture-code.md](architecture-code.md#35-детерминизм-реплеи-сеть-сохранения)).
@@ -822,7 +823,7 @@ FPS и TPS, hero shooter, battle royale, extraction shooter. Ощущение с
 | [Game Design Inspirations: Fortnite's Battle Royale Pivot](https://www.gamedeveloper.com/design/game-design-inspirations-fortnite-s-battle-royale-pivot) | Paul Gadi, 2017 | Разворот жанра внутри живой игры |
 | [How Escape from Duckov topped the Steam charts](https://www.gamedeveloper.com/business/behind-escape-from-duckov-s-unlikely-rise-to-the-top-of-the-steam-charts) | Nicole Carpenter, 30.10.2025 | Одиночный extraction: мотивация после потери снаряжения |
 | [Yager sunsetting The Cycle: Frontier](https://www.gamedeveloper.com/business/yager-sunsetting-the-cycle-frontier-after-cheaters-cause-irreparable-damage) | Chris Kerr, 28.06.2023 | Как читы убивают extraction-игру |
-| Latency Compensating Methods in Client/Server In-game Protocol Design and Optimization | Yahn Bernier, Valve, 2001; developer.valvesoftware.com `[не проверено]` (сайт недоступен 21.10.2026) | Классика компенсации задержки |
+| [Latency Compensating Methods in Client/Server In-game Protocol Design and Optimization](https://developer.valvesoftware.com/wiki/Latency_Compensating_Methods_in_Client/Server_In-game_Protocol_Design_and_Optimization) | Yahn W. Bernier, Valve, 2001; сайт закрыт проверкой от ботов, сверено по копии web.archive.org от 10.01.2024 | Классика компенсации задержки |
 
 ## 20. RPG
 
@@ -1244,7 +1245,7 @@ City builder, менеджмент колонии, фабрики, тайкун�
 
 ### Ключевые принципы
 
-- **Свобода маршрута.** Breath of the Wild убрала прогрессионные ворота: на любую поверхность можно залезть, параплан смягчает падения (Takuhiro Dohta, GDC 2017; пересказ Game Developer, 2023). «Химический» движок даёт огню, воде и другим стихиям действовать на любой объект, отсюда сотни взаимодействий (Game Developer, 2017). Термин «мультипликативный геймплей» встречается в пересказах доклада, точная формулировка не сверена `[не проверено]`.
+- **Свобода маршрута.** Breath of the Wild убрала прогрессионные ворота: на любую поверхность можно залезть, параплан смягчает падения (Takuhiro Dohta, GDC 2017; пересказ Game Developer, 2023). «Химический» движок даёт огню, воде и другим стихиям действовать на любой объект, отсюда сотни взаимодействий (Game Developer, 2017). Сам Fujibayashi формулирует принцип как «делать игры умножением»: способности героя, умноженные на насыщенный мир (Ask the Developer: Tears of the Kingdom, часть 4, Nintendo, 2023); термин «мультипликативный геймплей» — из пересказа доклада GDC 2017 (Thumbsticks, 02.03.2017).
 - **Рельеф управляет взглядом.** Треугольные формы рельефа дают выбор пути и прячут то, что за ними; разные формы служат ориентиром, ширмой или задают темп (Fujibayashi, Yonezu; CEDEC 2017, по пересказу Game Developer, 2023).
 - **Мир вне главного квеста.** The Witcher 3: экономика, добыча и прогрессия должны награждать игру вне основной линии (Matthew Steinke, GDC Europe 2016).
 - **Квесты.** Игрок должен хотеть историю; эмоция важнее зрелищности; не повторять одну информацию; последствия видимы и иногда отложены; не переусложнять второстепенное; новое строить на знакомом (Paweł Sasko, GDC 2023).
@@ -1368,6 +1369,6 @@ City builder, менеджмент колонии, фабрики, тайкун�
 4. **Power creep.** «Лестница Эшера» подтверждена Rosewater (Blogatog, 15.11.2019), но то, что общий уровень силы не растёт, — позиция WotC, с которой спорят.
 5. **Числовых ориентиров в первоисточниках мало.** Пороги вроде «WR выше 55%», «лидер на середине выигрывает больше 90%», «нет ходов к ходу 3–4» — рабочие эвристики. Числа из источников: окна попадания osu!, 128 тиков и 35 мс у VALORANT, 80% дистанции в Pure, 40% шанса у проигрывающей команды в LoR, скорости аватара в VR (Meta), 8 кадров отката за 16 мс (NetherRealm), рост цены 1,07 в примере Pecorella. Коридоры ставятся на этапе 2 [пайплайна](pipeline.md#этап-2-опоры-и-целевые-метрики) и помечаются как предположение, если нет референса.
 6. **Пересказ вместо первоисточника.** Часть докладов GDC доступна только по подписке; тогда в таблицах стоит конспект Game Developer или Tommy Thompson (Splinter Cell: Blacklist, Drivatar), слайды (Jaffe, Cook, Boutin) или описание сессии в GDC Vault (Cain, Brevik, Igarashi, Korppoo, Steinke). Детали докладов сверх описания и конспекта не проверялись.
-7. **Осталось непроверенным** (помечено `[не проверено]`): документ Valve о компенсации задержки (сайт разработчиков недоступен 21.10.2026), термин «мультипликативный геймплей» в докладе о Breath of the Wild, цикл трёх патчей на сет LoR, термин GIH WR у 17lands, Half-Life 2 Developer Commentary, Disco Elysium, XCOM (Solomon), доклады о God of War и Hollow Knight, год Celeste & Forgiveness, соавтор мемуаров Sid Meier, материалы Riot о ranked anxiety, отчёт Бельгийской комиссии по азартным играм, доклады Matt Leacock.
+7. **Непроверенных утверждений не осталось** (сверка 22.10.2026). Не найдены и убраны: доклады Jake Solomon о XCOM (вместо них интервью Ananda Gupta), доклады Team Cherry о бое Hollow Knight, первоисточник про видимый прогресс и смену режима против ranked anxiety. По пересказу: интервью Leacock в платном журнале Senet (цитаты у Derek Bruff), термин «мультипликативный геймплей» (Thumbsticks). Документ Valve и определения 17lands сверены по копиям web.archive.org.
 8. **Мёртвые и ограниченные ссылки.** Оригинал Celeste & Forgiveness на Medium недоступен, используется копия на maddymakesgames.com. playruneterra.com отдаёт пустую страницу без JS. Статья Riot о сетевом коде VALORANT переехала с technology.riotgames.com на riotgames.com. Сайт Frictional Games не показывает старые посты Thomas Grip, используются перепечатки на Game Developer.
 9. **Пробелы по жанрам.** Нет первоисточников по extraction-шутерам (Escape from Tarkov, Hunt: Showdown) — только пресса; нет докладов о дизайне FIFA, Madden и NBA 2K; по JRPG есть разбор Persona 5, но нет докладов Atlus, Square Enix и Game Freak; по party-играм нет материалов Jackbox; по ритм-играм не найдено исследование калибровки задержки. Дизайн-интервью о ресурсах франшизных ККИ (Lorcana, SWU, One Piece, Pokémon Pocket) не найдены — есть только правила. Кооперативные, мобильные и настольные разделы короче остальных. Если проблема выходит за рамки разделов, в карточке гипотезы пишите, что решения в библиотеке нет, а общие паттерны берите из [mechanics-patterns.md](mechanics-patterns.md) и [systems-balance.md](systems-balance.md).

@@ -83,8 +83,8 @@
 | HEP (Desurvire, Caplan, Toth 2004) | 43 эвристики в 4 категориях: game play (16), game story (8), game mechanics (7), game usability (12). Лучше всего работает на ранних прототипах | Широкое ревью играбельности |
 | PLAY (Desurvire & Wiberg 2009) | Следующая итерация HEP, проверенная на играх разных жанров | То же, более новая версия |
 | GameFlow (Sweetser & Wyeth 2005) | 8 элементов: концентрация, вызов, навыки, контроль, ясные цели, обратная связь, погружение, социальность | Ревью удовольствия и потока |
-| Korhonen & Koivisto 2006 | Мобильные эвристики в трёх модулях: game usability, mobility, gameplay; 29 пунктов [не проверено: число по вторичному источнику] | Мобильные игры |
-| Federoff 2002 | Первый свод игровых эвристик (MS thesis, Indiana University) в трёх областях по Clanton: game interface, game mechanics, game play. Число 40 [не проверено: открыт только фрагмент диссертации] | Исторически; новые наборы его покрывают |
+| Korhonen & Koivisto 2006 | Мобильные эвристики в трёх модулях: game usability (12), mobility (3), gameplay (14); всего 29 | Мобильные игры |
+| Federoff 2002 | Первый свод игровых эвристик (MS thesis, Indiana University) в трёх областях по Clanton. Итоговая таблица — 40 эвристик: game interface (13), game mechanics (2), game play (23) и две на стыке областей | Исторически; новые наборы его покрывают |
 | Rosewater, «Ten Things Every Game Needs» (2011) | A Goal, Rules, Interaction, A Catch-Up Feature, Inertia, Surprise, Strategy, Fun, Flavor, A Hook | Проверка основ любой игры; примеры автора — из Magic, уроки Rosewater — в [foundations.md](foundations.md) |
 
 ### 3.3. Nielsen 10 для интерфейса
@@ -106,7 +106,7 @@
 
 ## 4. Cognitive walkthrough
 
-Пошаговый обход задачи глазами новичка (Wharton, Rieman, Lewis, Polson 1994, глава в *Usability Inspection Methods*, с. 105–140 [не проверено: текст главы не открыт, вопросы — по Wikipedia]; журнальная версия метода — Polson et al. 1992, [DOI](https://doi.org/10.1016/0020-7373%2892%2990039-N)). Лучше всего подходит для обучения и первых минут. Задача разбивается на шаги, и на каждом шаге задаются четыре вопроса:
+Пошаговый обход задачи глазами новичка (Wharton, Rieman, Lewis, Polson 1994, глава в *Usability Inspection Methods*, с. 105–140; вопросы сверены по дословным цитатам главы у Spencer, CHI 2000, и Wilson 2014; журнальная версия метода — Polson et al. 1992, [DOI](https://doi.org/10.1016/0020-7373%2892%2990039-N)). Лучше всего подходит для обучения и первых минут. Задача разбивается на шаги, и на каждом шаге задаются четыре вопроса:
 
 1. Попытается ли игрок достичь нужного эффекта?
 2. Заметит ли он, что нужное действие доступно?
@@ -123,7 +123,8 @@
 - **Вывод для сложных игр** (стратегии, симуляторы, карточные, RPG с глубокими системами): туториал и контекстные подсказки, скорее всего, окупаются; в простой казуальной игре — не обязательно. Эффект проверяется A/B, а не предполагается.
 - **Lomas et al. 2013** (10 000 и 70 000 игроков): дольше играли в более лёгкие версии. Не делайте первые партии трудными «ради вызова».
 - **Andersen et al. 2011**: побочные цели могут снижать вовлечённость в основную. Квесты и награды в обучении не должны отвлекать от главного действия.
-- **Portal** (постмортем Kim Swift и Erik Wolpaw, GDC 2008, пересказ Gamasutra): мир делали чище и проще, чтобы научить игрока нужному; куб сжигают в конце уровня, и это заодно тренирует игрока к финальному боссу. Первую комнату переделали по итогам плейтеста. Swift: «Playtesting is probably the most important thing we did on Portal». Комментарии разработчиков Half-Life 2 как источник [не проверено].
+- **Portal** (постмортем Kim Swift и Erik Wolpaw, GDC 2008, пересказ Gamasutra): мир делали чище и проще, чтобы научить игрока нужному; куб сжигают в конце уровня, и это заодно тренирует игрока к финальному боссу. Первую комнату переделали по итогам плейтеста. Swift: «Playtesting is probably the most important thing we did on Portal».
+- **Half-Life 2** (комментарии разработчиков из юбилейного обновления, транскрипт Combine OverWiki): обучающий «барьер» маскируют под часть мира, и простая головоломка со штабелем ящиков учила лучше сложных вариантов; урок встраивают в сюжетную сцену (банка и метрокоп на вокзале). Игра учит всегда, даже ненамеренно: игроки усвоили, что из ящиков можно строить лестницу и выбираться за пределы уровня, а слабый урон гравипушки по зомби приняли за способ их убивать, поэтому реакцию зомби убрали.
 
 ### 5.2. Чеклист обучения
 
@@ -407,10 +408,11 @@
 | [Heuristic evaluation for games](https://doi.org/10.1145/1357054.1357282) | Pinelle, Wong, Stach, CHI 2008 | 10 игровых эвристик |
 | [Using heuristics to evaluate the playability of games (HEP)](https://doi.org/10.1145/985921.986102) | Desurvire, Caplan, Toth, 2004 | HEP |
 | [Game Usability Heuristics (PLAY)](https://doi.org/10.1007/978-3-642-02774-1_60) | Desurvire & Wiberg, 2009 | PLAY |
-| [Playability heuristics for mobile games](https://doi.org/10.1145/1152215.1152218) | Korhonen & Koivisto, 2006 | Мобильные эвристики |
+| [Playability heuristics for mobile games](https://doi.org/10.1145/1152215.1152218) ([авторская версия, архив](https://web.archive.org/web/20121203022527/http://research.nokia.com/files/p9-Korhonen%20-%20Authors%20Version.pdf)) | Korhonen & Koivisto, 2006 | Мобильные эвристики |
 | [GameFlow](https://doi.org/10.1145/1077246.1077253) | Sweetser & Wyeth, 2005 | 8 элементов потока как критерии ревью |
-| Heuristics and Usability Guidelines for the Creation and Evaluation of Fun in Video Games, MS thesis, Indiana University ([фрагмент PDF](https://ocw.metu.edu.tr/pluginfile.php/2510/mod_resource/content/0/ceit706_2/10/MelissaFederoff_Heuiristics.pdf)) | Melissa A. Federoff, 2002 | Первый свод игровых эвристик |
+| Heuristics and Usability Guidelines for the Creation and Evaluation of Fun in Video Games, MS thesis, Indiana University ([PDF, 52 с.](https://ocw.metu.edu.tr/pluginfile.php/2510/mod_resource/content/0/ceit706_2/10/MelissaFederoff_Heuiristics.pdf)) | Melissa A. Federoff, 2002 | Первый свод игровых эвристик |
 | The cognitive walkthrough method: a practitioner's guide, в *Usability Inspection Methods* (Nielsen & Mack, ред., Wiley), с. 105–140 | Wharton, Rieman, Lewis, Polson, 1994 | Метод обхода задачи |
+| [The streamlined cognitive walkthrough method](https://doi.org/10.1145/332040.332456); *User Interface Inspection Methods*, гл. 4, [DOI](https://doi.org/10.1016/B978-0-12-410391-7.00004-X) | Spencer, CHI 2000; Wilson, 2014 | Четыре вопроса Wharton дословно; облегчённые версии обхода |
 | [Severity Ratings for Usability Problems](https://www.nngroup.com/articles/how-to-rate-the-severity-of-usability-problems/) | Nielsen, 1994 | Шкала серьёзности 0–4 |
 | *The Art of Game Design: A Book of Lenses*, 3rd ed., [DOI](https://doi.org/10.1201/b22101) | Schell, 2019 | Линзы как вопросы ревью |
 | «Ten Things Every Game Needs», Making Magic: [Part 1](https://magic.wizards.com/en/news/making-magic/ten-things-every-game-needs-part-1-2011-10-24), [Part 2](https://magic.wizards.com/en/news/making-magic/ten-things-every-game-needs-part-1-part-2-2011-12-19) | Rosewater, 2011 | Десять основ игры на примере Magic |
@@ -425,11 +427,12 @@
 | [Accessible Player Experiences (APX)](https://accessible.games/accessible-player-experiences/) | AbleGamers, 2022 | 22 паттерна решений |
 | [Can I Play That?](https://caniplaythat.com/) | AbilityPoints | Обзоры доступности от игроков |
 | [Best Of GDC: The Secrets Of Portal's Huge Success](https://www.gamedeveloper.com/game-platforms/best-of-gdc-the-secrets-of-i-portal-i-s-huge-success) | Kumar о постмортеме Swift и Wolpaw (Valve), GDC 2008 | Обучение через дизайн уровней и плейтест |
+| [Developer commentary/Half-Life 2](https://combineoverwiki.net/wiki/Developer_commentary/Half-Life_2) | Valve, юбилейное обновление (20 лет игре); транскрипт Combine OverWiki | Обучающие барьеры, ложные уроки, плейтесты |
 | [Locomotion best practices](https://developers.meta.com/horizon/design/locomotion-best-practices/); [Locomotion comfort and usability](https://developers.meta.com/horizon/design/locomotion-comfort-usability/) | Meta, обновлено 17.12.2025 | Комфорт в VR: повороты, ускорения, частота кадров, пресеты |
 | [Owlchemy Labs Case Study: Lessons Learned from JOB to VACATION](https://developers.meta.com/horizon/blog/owlchemy-labs-case-study-lessons-learned-from-job-to-vacation/) | Devin Reimer, Andrew Eiche, 2019 | Руки, личное пространство, размер комнаты в VR |
 | [Simulator Sickness Questionnaire](https://doi.org/10.1207/s15327108ijap0303_3) | Kennedy, Lane, Berbaum, Lilienthal, 1993 | Опросник укачивания |
 | [Champion Balance Framework](https://www.leagueoflegends.com/en-us/news/dev/dev-champion-balance-framework/) | Riot, 2019 | Пороги win rate, ban rate, presence в командном PvP |
-| [Celeste & Forgiveness](https://maddymakesgames.com/articles/celeste_and_forgiveness/index.html) | Maddy Thorson, год [не проверено] | Механики прощения в платформере |
+| [Celeste & Forgiveness](https://maddymakesgames.com/articles/celeste_and_forgiveness/index.html) | Maddy Thorson; статья выросла из треда в Twitter от 13.03.2020 | Механики прощения в платформере |
 | [Adaptive rubber-banding system of DDA in racing games](https://doi.org/10.3233/ICG-220207) | Mi & Gao, ICGA Journal 2022 | Катч-ап в гонках |
 | [BioWare keynote, ECGC 2015 (пересказ)](https://gamersnexus.net/industry/1897-bioware-keynote-ecgc-2015) | Mike Laidlaw (BioWare); GamersNexus, 2015-04-09 | Тепловые карты открытого мира в плейтестах Dragon Age: Inquisition |
 
@@ -438,8 +441,8 @@
 ## 12. Расхождения и пробелы
 
 1. **Pinelle**: формулировки и 108 рецензий GameSpot сверены с PDF статьи (2026-10-20). Прежний пересказ по памяти совпадал по смыслу.
-2. **HEP**: 43 эвристики и 4 категории сверены с PDF (16 + 8 + 7 + 12). Korhonen: модули сверены, число 29 — по вторичному источнику. Federoff: тема и три области сверены по фрагменту диссертации, число 40 не подтверждено.
-3. **RITE и Rosewater** сверены с первоисточниками. Прежний список Rosewater («вызов, катарсис, скрытая информация») был неверен и заменён. **Cognitive walkthrough**: выходные данные главы 1994 сверены, текст не открыт. **Valve**: подтверждён постмортем Portal (GDC 2008) в пересказе Gamasutra; комментарии разработчиков Half-Life 2 не найдены.
+2. **HEP**: 43 эвристики и 4 категории сверены с PDF (16 + 8 + 7 + 12). Korhonen: модули и 29 эвристик (12 + 3 + 14) сверены с авторской версией статьи (архив Nokia Research, 2026-10-22). Federoff: 40 эвристик сверены с таблицей 4 диссертации; PDF на METU — полный текст (52 с.), а не фрагмент.
+3. **RITE и Rosewater** сверены с первоисточниками. Прежний список Rosewater («вызов, катарсис, скрытая информация») был неверен и заменён. **Cognitive walkthrough**: текст главы 1994 не открыт; четыре вопроса совпадают с дословными цитатами у Spencer 2000 и Wilson 2014 (с. 106 главы). У Wilson первый вопрос — «right action», у Spencer и в большинстве пересказов — «right effect». **Valve**: подтверждён постмортем Portal (GDC 2008) в пересказе Gamasutra. Комментарии Half-Life 2 есть только в юбилейном обновлении; сверены по транскрипту Combine OverWiki, не по игре.
 4. **XAG 123** — психическое здоровье и предупреждения о контенте (сверено со страницей XAG).
 5. **Andersen 2012** проверен на трёх играх (самая сложная — Foldit). Перенос вывода «туториал окупается в сложных играх» на стратегии, карточные, симуляторы и RPG — разумная гипотеза, а не факт.
 6. **Ловушки для новичков** — синтез скилла. Отдельного источника с таким каталогом ни для одного жанра не найдено. Шкала серьёзности привязана к шкале Nielsen 1994 (раздел 10).

@@ -41,7 +41,7 @@
 | И16 | Перевод не влезает в кнопки | Скриншоты с псевдолокализацией | Запас ширины: короткие строки удлиняются в 2–3 раза | W3C, «Text size in translation» (таблица IBM) | Пустые кнопки в языке оригинала |
 | И17 | Игроки отключают «погружающий» интерфейс | Опрос, настройки HUD в телеметрии | В соревновательных режимах — ясные non-diegetic элементы | Fagerholt & Lorentzon 2009, «Know Your Game» | Теряется атмосфера |
 | И18 | Обучающий текст пропускают | Ошибки повторяются после подсказки | Не показывать текст в момент нагрузки (в бою); учить в контексте | Hodent 2019; [design-review.md](design-review.md#5-обучение-и-понятность) | Подсказка приходит поздно |
-| И19 | Автоматизация ходов мешает опытным | Жалобы «игра пропустила мой ответ» | Умная автоматизация по умолчанию плюс ручные стопы | MTG Arena: smart priority, full control | Автопас может выдать информацию о руке `[не проверено]` |
+| И19 | Автоматизация ходов мешает опытным | Жалобы «игра пропустила мой ответ» | Умная автоматизация по умолчанию плюс ручные стопы | MTG Arena: smart priority, full control | Если игра пасует сама только тогда, когда ответить нечем, быстрый пас выдаёт руку: нужен режим full control для блефа |
 | И20 | Анимации задерживают ввод | Время от конца хода соперника до возможности действовать | Анимации не блокируют логику; ускорение и пропуск | LoR: «animation speed and input blocking» (Inven 2020); [architecture-code.md](architecture-code.md) → П23 | Без анимаций игрок не видит, что случилось |
 | И21 | Игрок не понимает, почему проиграл | Интервью «почему?»; лог событий | История действий на экране; разбор после партии | Hearthstone: история слева от поля | Лог занимает место |
 | И22 | Текст HUD нечитаем на пёстром фоне | Контраст на скриншотах в разных сценах | Отключаемая сплошная подложка под текст | Ubisoft, The Crew Motorfest, 2023 | Меньше погружения |
@@ -69,7 +69,7 @@ Usability Hodent называет близкой к эвристикам дру�
 
 **Где искать примеры и практику.**
 
-- [Game UI Database](https://www.gameuidatabase.com/) (Edd Coates) — бесплатная база скриншотов и видео интерфейсов с фильтрами по типу экрана, цвету, управлению, паттернам и элементам HUD. По Creative Bloq, в версии 2.0 (2024) больше 55 тысяч скриншотов из 1 341 игры `[не проверено]`. Перед использованием скриншотов в коммерческой работе проверьте права.
+- [Game UI Database](https://www.gameuidatabase.com/) (Edd Coates) — бесплатная база скриншотов и видео интерфейсов с фильтрами по типу экрана, цвету, управлению, паттернам и элементам HUD. Версия 2.0 вышла в августе 2024 года (80 Level); в октябре 2026 года главная страница сайта показывает 78 601 скриншот и видео из 1 974 игр. Перед использованием скриншотов в коммерческой работе проверьте права.
 - Game UX Summit — отраслевая конференция по game UX. Первую провела Epic Games в 2016 году, дальше хост менялся: Ubisoft Toronto (2017), EA (2018).
 - Доклады: Hodent, «Developing a UX Mindset on Fortnite» (GDC 2019); Ignacio, Dead Space UI (GDC 2013); Sakamoto, Hearthstone UI (GDC 2015). Ссылки — в [разделе 9](#9-источники).
 - Эвристики интерфейса (Nielsen 10, Pinelle) и cognitive walkthrough — в [design-review.md](design-review.md#33-nielsen-10-для-интерфейса).
@@ -152,7 +152,7 @@ Usability Hodent называет близкой к эвристикам дру�
 
 - Перевод с английского на европейские языки удлиняет короткие строки сильнее всего. Таблица IBM в статье W3C: до 10 символов — 200–300% длины оригинала, 11–20 — 180–200%, больше 70 — около 130%.
 - Нелатинские письменности требуют больше высоты строки: тайский текст в примере W3C занимает около 150% высоты латиницы.
-- RTL (арабский, иврит): раскладка зеркалится, отступы задаются как start/end, а не left/right. Стрелки «вперёд» смотрят влево (Android Developers). Что зеркалить, а что нет (медиа-иконки, числа, логотипы), Android отсылает к гайду Material Bidirectionality; его страница в этой сессии не открылась `[не проверено]`.
+- RTL (арабский, иврит): раскладка зеркалится, отступы задаются как start/end, а не left/right. Стрелки «вперёд» смотрят влево (Android Developers). Что не зеркалить, Android отсылает к гайду Material Bidirectionality: числа, непереведённый текст, иконки без направления, графики, часы и круговые стрелки обновления, кнопки воспроизведения и полосу прогресса медиа (они показывают ход ленты, а не времени).
 - Проверка: псевдолокализация (удлинённые строки с диакритикой) на всех экранах до перевода.
 
 **Разрешения и safe areas.**
@@ -177,7 +177,7 @@ Usability Hodent называет близкой к эвристикам дру�
 ### 6.2. RPG
 
 - Плотность информации высокая: статы, предметы, квесты. Решение — ранжирование и раскрытие по запросу (раздел 4).
-- Большой инвентарь требует сортировки, фильтров и поиска. Сравнение предмета с надетым показывайте прямо в подсказке `[не проверено]`: каноничного источника по инвентарям RPG не найдено, только разборы сообщества.
+- Большой инвентарь требует сортировки, фильтров и поиска. Сравнение предмета с надетым показывайте прямо в подсказке. Diablo III сводит его к нескольким обобщённым числам (урон, живучесть, восстановление); Blizzard называет такую подсказку обучающим инструментом, а не готовым решением за игрока (Blizzard, 2016).
 - Подсказка клавиши рядом с объектом снимает нагрузку на память: в Fortnite HUD показывает, какую клавишу нажать, чтобы обыскать предмет (Hodent 2019).
 - Закрепление цели в HUD (рецепт, квест) экономит переходы в журнал: в Fortnite рецепты крафта можно закрепить в HUD (Hodent 2019).
 - Субтитры диалогов: размер, подложка, имя говорящего ([design-review.md](design-review.md#6-доступность), XAG 104).
@@ -189,7 +189,7 @@ Usability Hodent называет близкой к эвристикам дру�
 - Превью последствий приказа (путь, урон, исход) сокращает пересчёты. Into the Breach показывает намерения врагов заранее ([mechanics-patterns.md](mechanics-patterns.md) → О5).
 - На геймпаде — фокус и радиальные меню, а не виртуальная мышь (CK3 Console Dev Diary #3).
 - Уведомления ранжируются: что требует решения сейчас, а что подождёт.
-- Обратная сторона: игроки CK3 жаловались на перегруженный экран и всплывающие подсказки `[не проверено]`. Плотность нужно мерить тестом 5 секунд и временем поиска.
+- Обратная сторона: подсказки на каждое наведение мешают опытным. В CK3 вложенный тултип по умолчанию закрепляется по таймеру, а опытный игрок переключает его на закрепление средней кнопкой мыши, то есть только по запросу (CK3 Dev Diary #16, 2020). Плотность нужно мерить тестом 5 секунд и временем поиска.
 
 ### 6.4. Платформеры и аркады
 
@@ -234,7 +234,7 @@ Usability Hodent называет близкой к эвристикам дру�
 ### 6.9. Мобильные и казуальные
 
 - Хват различается. Hoober (2013, 1 333 наблюдения, из них 780 с касанием экрана): одной рукой 49%, в одной руке с касанием другой («cradled») 36%, двумя руками 15%. В 2017 году он обновил выводы, поэтому проверяйте свою аудиторию.
-- Частые действия — в зоне досягаемости большого пальца; редкие и опасные — дальше от неё `[не проверено]`: это вывод из данных Hoober, а не его формулировка.
+- Hoober (2017): главный контент — в центре экрана, второстепенные действия — у верхнего и нижнего края, третьестепенные — в меню из углов, опасные — подальше от остальных элементов. Популярную карту «зоны большого пальца» он считает неверной: люди перехватывают телефон и тем меняют досягаемую зону.
 - Цели касания 44×44 pt или 48×48 dp, зазор 8 dp (Apple; Android).
 - Safe area и вырезы экрана; текст не меньше минимумов XAG 101 для мобильных.
 - Сессии короткие: состояние сохраняется при сворачивании, возврат в то же место. Kim (2014) советует считать пути, а не экраны.
@@ -348,7 +348,7 @@ python3 scripts/metrics_compare.py metrics/ui_before.json metrics/ui_after.json 
 | [Crafting Destruction: The Evolution of the Dead Space User Interface](https://gdcvault.com/play/1017723/Crafting-Destruction-The-Evolution-of) | Dino Ignacio, GDC 2013, бесплатно | Как строили диегетический UI |
 | [Clarity in League](https://www.leagueoflegends.com/en-gb/news/dev/clarity-in-league/) | Riot Games, 2021 | Иерархия, шум, соразмерность эффекта и влияния |
 | [The 3 Response Time Limits](https://www.nngroup.com/articles/response-times-3-important-limits/) | Jakob Nielsen, 1993, обновл. 2014 | Пороги 0.1 / 1 / 10 с |
-| [Game UI Database](https://www.gameuidatabase.com/) | Edd Coates, с 2020 | База примеров интерфейсов с фильтрами |
+| [Game UI Database](https://www.gameuidatabase.com/) | Edd Coates, с 2020; [v2.0 — 80 Level, 2024](https://80.lv/articles/game-ui-database-2-0-has-been-released) | База примеров интерфейсов с фильтрами |
 | [XAG 101: Text display](https://devdocs.xbox.com/build/game-principles/accessibility/xag-deep-dives/xag-101-text-display.md) | Microsoft | Минимальные размеры текста по платформам и метод замера |
 | [Xbox: Screen areas](https://devdocs.xbox.com/build/core-features/graphics/overviews/screen-areas) | Microsoft | Title-safe и action-safe в пикселях |
 | [Apple Design Tips](https://developer.apple.com/design/tips/) | Apple | 44×44 pt, текст от 11 pt |
@@ -358,13 +358,17 @@ python3 scripts/metrics_compare.py metrics/ui_before.json metrics/ui_after.json 
 | [Color blindness](https://www.nei.nih.gov/learn-about-eye-health/eye-conditions-and-diseases/color-blindness) | National Eye Institute | Распространённость |
 | [Text size in translation](https://www.w3.org/International/articles/article-text-size) | W3C i18n | Удлинение строк при переводе, высота строк |
 | [Support different languages and cultures](https://developer.android.com/training/basics/supporting-devices/languages) | Android Developers | RTL: start/end, зеркалирование иконок |
+| [Material: Bidirectionality](https://m2.material.io/design/usability/bidirectionality.html) | Google, Material Design 2 (прочитано по архиву 2018 года) | Что зеркалить в RTL, а что нет |
 | [Mobile UI and Game Design: Screens vs. Flows](https://www.gamedeveloper.com/design/mobile-ui-and-game-design-screens-vs-flows) | Joseph Kim, 2014 | Проектирование потоков вместо экранов |
 | [Wireframe your layouts](https://create.roblox.com/docs/tutorials/curriculums/user-interface-design/wireframe-your-layouts), [Console guidelines](https://create.roblox.com/docs/production/publishing/console-guidelines) | Roblox Creator Docs | Вайрфреймы и потоки; навигация на консоли |
 | [CK3 Console Dev Diary #3: UI/UX and Controls](https://www.paradoxinteractive.com/games/crusader-kings-iii/news/ck3-console-dev-diary-3-uiux-and-controls) | Paradox, 2022 | Перенос плотного UI стратегии на геймпад |
 | [Tinto Talks #77](https://admin-forum.paradoxplaza.com/forum/developer-diary/tinto-talks-77-20th-of-august-2025.1856053) | Paradox, 2025 | Вложенные тултипы CK3 → EU5 |
+| [CK3 Dev Diary #16: Tutorials and Tooltips and Encyclopedias](https://forum.paradoxplaza.com/forum/threads/ck3-dev-diary-16-tutorials-and-tooltips-and-encyclopedias-oh-my.1345581/) | Paradox, 03.03.2020 | Вложенные тултипы, режимы их закрепления, туториал |
+| [Diablo Then & Now – Item Comparison Evolution](https://web.archive.org/web/2016/http://us.battle.net/d3/en/blog/20120910/diablo-then-now-item-comparison-evolution-5-17-2016) | Blizzard (Nevalistis), 17.05.2016, архив | Сравнение предметов в подсказке |
 | [The Crew Motorfest accessibility spotlight](https://news.ubisoft.com/en-us/article/OUUpCEKxrkfv6I5sGAeWz/the-crew-motorfest-accessibility-spotlight) | Ubisoft, 2023 | HUD гонки: линия, подложки, отключаемые элементы |
 | [Ghost piece](https://tetris.wiki/Ghost_piece) | TetrisWiki | Превью результата в головоломке |
 | [How Do Users Really Hold Mobile Devices?](https://www.uxmatters.com/mt/archives/2013/02/how-do-users-really-hold-mobile-devices.php) | Steven Hoober, 2013 | Как держат телефон |
+| [Design for Fingers, Touch, and People, Part 1](https://www.uxmatters.com/mt/archives/2017/03/design-for-fingers-touch-and-people-part-1.php) | Steven Hoober, 2017 | Куда ставить главное, второстепенное и опасное |
 | [Meta: Comfort](https://developers.meta.com/horizon/design/comfort/), [Indirect interactions](https://developers.meta.com/vr/design/indirect_interactions_bp/), [Hands UI](https://developers.meta.com/vr/design/hands-ui-best-practices/) | Meta | Дистанции и эргономика UI в VR |
 | [Hearthstone: How to Create an Immersive User Interface](https://gdcvault.com/play/1022036/Hearthstone-How-to-Create-an) | Derek Sakamoto, GDC 2015, бесплатно | UI цифровой карточной игры; пересказ — [MeinMMO, 2015](https://mein-mmo.de/en/hearthstone-weg-zum-megahit063,32034/) |
 | [Video: 10 pieces of Hearthstone design wisdom](https://gamedeveloper.com/design/video-10-pieces-of-i-hearthstone-i-design-wisdom) | Eric Dodds, GDC 2014 | Чем меньше объяснять, тем лучше |
@@ -389,9 +393,8 @@ python3 scripts/metrics_compare.py metrics/ui_before.json metrics/ui_after.json 
 **Пробелы.**
 
 - Нет первоисточника о дизайне интентов Slay the Spire, об интерфейсе Balatro и о мобильной раскладке Marvel Snap.
-- Нет официального описания auto-pass в MTG Arena; есть только smart priority и мобильный FAQ.
-- Нет проверенных первоисточников по UI спортивных игр и по инвентарям RPG.
-- Нет опубликованного игрового кейса с замерами мисскликов или времени до действия. Коридоры для метрик раздела 7 команда задаёт сама.
+- Нет официального описания auto-pass в MTG Arena; есть только smart priority и мобильный FAQ. Что автопас выдаёт руку, пишут только гайды сообщества, поэтому в И19 риск дан как логический вывод.
+- Нет проверенных первоисточников по UI спортивных игр; по инвентарям RPG — только блог Blizzard о сравнении предметов в Diablo III.- Нет опубликованного игрового кейса с замерами мисскликов или времени до действия. Коридоры для метрик раздела 7 команда задаёт сама.
 - Нет студийного кейса о прототипировании игрового UI в Figma.
 - Страницы Apple HIG (Layout, Games) и Material 3 в этой сессии не открылись; использованы Apple Design Tips и справка Android.
 - Состав компонентов в 2-м издании The Gamer's Brain (©2026) не сверен; список взят из блога Hodent 2019/2020.

@@ -69,7 +69,7 @@
 | Быстрый снаряд или персонаж прошёл сквозь стену | Непрерывное обнаружение столкновений или swept-запрос (П51) | Unity CCD; Catto, GDC 2013 |
 | Персонаж застревает на ступеньках, скользит по склонам | Кинематический контроллер с move-and-slide и параметрами пола (П50) | Godot CharacterBody2D |
 | «Попал, но урон не засчитан» | Серверная лаг-компенсация: перемотка хёртбоксов на момент выстрела (П53) | Bernier 2001; Gambetta Part IV; Aldridge 2011 |
-| «Меня убили уже за укрытием» | Осознанная цена лаг-компенсации (П53), ограничение окна перемотки [не проверено: общая практика] | Gambetta Part IV |
+| «Меня убили уже за укрытием» | Осознанная цена лаг-компенсации (П53), ограничение окна перемотки (в Source `sv_maxunlag`: по умолчанию и максимум 1 с) | Gambetta Part IV; [Valve: Lag Compensation](https://developer.valvesoftware.com/wiki/Lag_Compensation) |
 | Одна атака бьёт цель несколько раз за взмах | Список уже поражённых целей на экземпляр атаки (П53) | Синтез |
 | Удар визуально попал, а урона нет (или наоборот) | Окна атаки — данные или точные события анимации, урон считает симуляция (П54) | Unreal Animation Notifies |
 | Персонаж «скользит» ногами, анимация расходится с перемещением | Один источник перемещения: root motion или код с подгонкой скорости анимации (П55) | Unity, Unreal, Godot: Root Motion |
@@ -279,7 +279,7 @@ tools и tests: функциональные тесты через тест-API,
 ### 4.6 Анимационно-управляемый геймплей
 
 - **Машины состояний и blend trees.** Godot AnimationTree: StateMachine (состояние — анимация, blend space, blend tree или вложенная машина), BlendSpace1D/2D, BlendTree; `travel()` ищет путь по переходам через A*. Логическое состояние персонажа (П8, П9) — источник, анимационный граф — его отражение; обратная зависимость («атака закончилась, потому что кончилась анимация») допустима только через явные события [синтез].
-- **Root motion.** Unity переносит смещение root transform на объект каждый кадр. Godot отменяет движение корневой кости визуально и отдаёт его через `get_root_motion_position()`, чтобы передать в `move_and_slide()`. Unreal предлагает режимы, включая «Root Motion from Montages Only» и «from Everything»; последний дороже и, как и режим с монтажами, переносит обновление анимационного графа в игровой поток. Правило П55: один источник перемещения.
+- **Root motion.** Unity переносит смещение root transform на объект каждый кадр. Godot отменяет движение корневой кости визуально и отдаёт его через `get_root_motion_position()`, чтобы передать в `move_and_slide()`. Unreal предлагает режимы, включая «Root Motion from Montages Only» и «from Everything»; последний дороже и, как и режим с монтажами, переносит обновление анимационного графа в игровой поток; для сетевых игр документация UE 4.27 требовала монтажи (раздел 9). Правило П55: один источник перемещения.
 - **События анимации.** Unity Animation Events вызывают функцию в момент клипа. Unreal Notifies — события, Notify States — окна с началом и концом. Для решений, меняющих геймплей, Epic рекомендует тиковку Branching Point вместо менее точной Queued. По умолчанию нотифаи не срабатывают на выделенном сервере (нужен флаг «Trigger on Dedicated Server») и могут подавляться по LOD — классический источник «урон есть в одиночной игре и пропал в сети».
 - **Надёжнее для боя.** Окна атаки (подготовка, активность, восстановление) как данные атаки в кадрах симуляции, анимация лишь показывает их; так считают файтинги, и так окна одинаковы на сервере, в реплее и в боте [синтез].
 - **Motion matching.** Clavet (Ubisoft, GDC 2016): вместо большого графа состояний поиск в длинных записях мокапа кадра, лучше всего подходящего к текущей позе и желаемому движению; позже технология вышла в For Honor. Геймплей при этом задаёт желаемую траекторию, а не анимацию.
@@ -372,7 +372,7 @@ tools и tests: редактор и валидатор контента, реп�
 7. **DSL эффектов** выращивается из 2–3 реальных механик (П34); escape hatch на скрипте для уникального контента; подсказки ИИ рядом, как в Forge.
 8. **Выборы** — `DecisionRequest{player, kind, options, constraints}` в состоянии.
 9. **Скрытая информация** — `view(state, player)`: рука, колода, туман войны. Бот тоже получает только `view`.
-10. **Детерминизм.** RNG только из состояния, упорядоченные коллекции, целые числа в правилах, без системного времени. Отдельные потоки RNG на системы (бой, добыча, генерация карты), чтобы правка одной не сдвигала другие; так, по разборам сообщества, сделано в Slay the Spire [не проверено]. Хранить seed в сейве — решение дизайна: XCOM: Enemy Unknown, по распространённому описанию, сохраняет seed, и перезагрузка не меняет исход выстрела [не проверено].
+10. **Детерминизм.** RNG только из состояния, упорядоченные коллекции, целые числа в правилах, без системного времени. Отдельные потоки RNG на системы (бой, добыча, генерация карты), чтобы правка одной не сдвигала другие; в Slay the Spire класс `AbstractDungeon` держит отдельные `cardRng`, `monsterRng`, `eventRng`, `relicRng`, `treasureRng`, `merchantRng` и др. (видно по модам и по симулятору [sts_lightspeed](https://github.com/gamerpuppy/sts_lightspeed)). Хранить seed в сейве — решение дизайна: XCOM: Enemy Unknown сохраняет seed, и перезагрузка не меняет исход выстрела; Enemy Within (2013) добавил опцию Second Wave «Save Scum», сбрасывающую seed при загрузке (ведущий дизайнер Ananda Gupta, по пересказу [GameBanshee](http://www.gamebanshee.com/daf)).
 11. **Реплеи и тесты.** `seed + [Command]` и есть реплей; каждый баг — сценарий (П42); корпус реплеев в CI (П43); массовые бот-партии ловят нарушения инвариантов (П45).
 12. **Превью и undo.** Превью хода в тактике — тот же `apply` на копии, поэтому не расходится с исходом. Undo для пазлов и обучения — персистентное состояние или журнал команд с пересимуляцией от seed.
 13. **Сеть.** Авторитарный сервер и запрос-ответ; мгновенный отклик даёт локальная анимация намерения.
@@ -404,7 +404,7 @@ tools и tests: редактор и валидатор контента, реп�
 | Шутеры и экшен | Навмеш (Recast/Detour используется в Unity, Unreal, Godot, O3DE); BT или utility для выбора цели, укрытия и оружия; модель прицела: задержка реакции, ошибка, зависящая от дистанции и движения, точность как ручка сложности | Время до убийства, ценность оружия и позиций, проходимость карт | Straatman et al., Killzone 3 (GAP1); Ocio Barriales (GAP3); Zieliński, Paragon (GAP3) |
 | Стратегии (RTS, 4X, tower defense) | Иерархия: стратегия (экономика, состав армии) → тактика (influence maps, предсказание исхода боя) → микроконтроль; портфельный поиск по набору скриптов | Сильные билды, доминирующие юниты, тайминги | Dill (GAP2); Stanescu et al. (GAP3); Churchill & Buro, Prismata (GAP3) |
 | Гонки | Трасса как линия гонки и коридор, руль и газ на PID-контроллерах, выбор позиции на трассе; rubber-banding при замерах выключить или мерить отдельно | Время круга по машинам и трассам, честность догоняющей механики | Tomlinson & Melder (GAP1, три главы); Melder (GAP1) |
-| Платформеры | A* по состояниям игры, где переход — прогон физики на копии состояния на несколько кадров вперёд (так описывают победный агент Baumgarten в Mario AI Competition 2009 [не проверено]); требует клонируемой детерминированной симуляции. Запасной путь — воспроизведение записанных прохождений людей | Проходимость уровней, минимальное время, «нечестные» прыжки | Togelius, Karakovskiy, Baumgarten 2010 |
+| Платформеры | A* по состояниям мира, где сосед — состояние после одного шага скопированного физического движка при выбранной комбинации кнопок (победный агент Baumgarten в Mario AI Competition 2009); требует клонируемой детерминированной симуляции. Запасной путь — воспроизведение записанных прохождений людей | Проходимость уровней, минимальное время, «нечестные» прыжки | Togelius, Karakovskiy, Baumgarten 2010 |
 | Автоплей для настройки | Агенты, обученные или эволюционированные под метрику, играют до релиза | Настройка параметров на масштабе | Borovikov (GAP Online 2021); Manabe & Miyake (GAP Online 2021) |
 
 **ISMCTS и скрытая информация.** Обычный MCTS с полным состоянием видит скрытое и даёт завышенную силу. ISMCTS строит дерево по информационным множествам. Главные грабли в карточных и тактических играх — большой фактор ветвления и составные ходы (Roelofs, GAP3); составной ход удобно дробить на цепочку атомарных решений через `DecisionRequest` (синтез). MCTS требует тысяч дешёвых копий состояния, поэтому до него нужен чистый редьюсер (П21). Модуль `gym` в argentum-engine — пример отдельного входа для MCTS и self-play.
@@ -455,7 +455,7 @@ tools и tests: редактор и валидатор контента, реп�
 | [Data-Oriented Design](https://dataorienteddesign.com/dodbook/) | Richard Fabian, 2018 | Таблицы вместо объектов |
 | [CppCon 2014: Data-Oriented Design and C++](https://isocpp.org/blog/2015/01/cppcon-2014-data-oriented-design-and-c-mike-acton) | Mike Acton, 2014 | Когда ООП-иерархии вредят производительности |
 | [ECS FAQ](https://github.com/SanderMertens/ecs-faq); [flecs](https://github.com/SanderMertens/flecs), [EnTT](https://github.com/skypjack/entt), [Bevy ECS](https://docs.rs/crate/bevy_ecs/latest) | Sander Mertens; Caini; Bevy contributors | Архетипы против sparse set; три эталонных ECS |
-| ['Overwatch' Gameplay Architecture and Netcode](https://gdcvault.com/play/1024001/-Overwatch-Gameplay-Architecture-and) | Timothy Ford, GDC 2017 | Строгий ECS и детерминизм сетевой симуляции (по аннотации); детали — только из вторичных разборов [не проверено] |
+| ['Overwatch' Gameplay Architecture and Netcode](https://gdcvault.com/play/1024001/-Overwatch-Gameplay-Architecture-and) | Timothy Ford, GDC 2017 | Строгий ECS; сетевая симуляция и детерминизм ради отзывчивости и точности (по аннотации GDC Vault) |
 | [Replay Technology in 'Overwatch'](https://gdcvault.com/play/1024053/Replay-Technology-in-Overwatch-Kill) | Philip Orwig, GDC 2017 | Реплеи: kill cam и воспроизведение багов |
 | A Data-Driven Game Object System ([копия PDF](https://www.sebaslab.com/wp-content/uploads/2022/07/data-driven-game-object-system1.pdf)) | Scott Bilas, GDC 2002 | Первоисточник компонентной модели, «No engineer required» |
 | [Evolve Your Hierarchy](https://cowboyprogramming.com/2007/01/05/evolve-your-heirachy/) | Mick West, 2007 | Почему иерархии ломаются |
@@ -545,7 +545,7 @@ tools и tests: редактор и валидатор контента, реп�
 | [Three States and a Plan: The A.I. of F.E.A.R.](https://pages.cs.wisc.edu/~dyer/cs540/handouts/gdc2006_orkin_jeff_fear.pdf) | Jeff Orkin, GDC 2006 | GOAP |
 | [Improving AI Decision Modeling Through Utility Theory](https://gdcvault.com/play/1012410/Improving-AI-Decision-Modeling-Through) | Dave Mark, Kevin Dill, GDC 2010 | Utility AI |
 | [Information Set Monte Carlo Tree Search](https://eprints.whiterose.ac.uk/75048) | Cowling, Powley, Whitehouse, 2012 | Алгоритм для игр со скрытой информацией |
-| [The 2009 Mario AI Competition](https://gpbib.cs.ucl.ac.uk/gp-html/Togelius_2010_cec.html) | Togelius, Karakovskiy, Baumgarten, IEEE CEC 2010 | Боты для платформера; победитель — A*-агент Baumgarten |
+| [The 2009 Mario AI Competition](https://gpbib.cs.ucl.ac.uk/gp-html/Togelius_2010_cec.html) ([PDF](http://julian.togelius.com/Togelius2010The.pdf)) | Togelius, Karakovskiy, Baumgarten, IEEE CEC 2010 | Боты для платформера; победитель — A*-агент Baumgarten |
 | [Video: Building the AI for Hearthstone](https://www.gamedeveloper.com/design/video-building-the-ai-for-i-hearthstone-i-) | Brian Schwab, GDC 2014 | Ориентир скорости: 9–11 тыс. игр на серверное ядро |
 | ['Slay the Spire': Metrics Driven Design and Balance](https://gdcvault.com/play/1025731/Slay-the-Spire-Metrics-Driven) | Anthony Giovannetti, GDC 2019 | Телеметрия ранов как часть архитектуры баланса |
 | [Red Blob Games](https://www.redblobgames.com/) | Amit Patel | Сетки, A*, гексы, вероятности |
@@ -588,8 +588,8 @@ tools и tests: редактор и валидатор контента, реп�
 - **1500 Archers.** gamedeveloper.com указывает автором Paul Bettner, классически цитируют Terrano & Bettner (GDC 2001).
 - **Hearthstone.** Официального доклада Blizzard о движке правил нет. Advanced rulebook и модель тегов — реверс-инжиниринг сообщества.
 - **Unreal GAS, стаки и формула.** Официальная страница Gameplay Effects перечисляет варианты стаков, но не называет политик «по источнику / по цели» и не даёт формулу агрегации; они взяты из неофициального GASDocumentation (tranek), прочитана первая треть файла.
-- **Unreal root motion в сети.** Распространённый совет «в мультиплеере только Root Motion from Montages Only» на странице Root Motion не найден [не проверено]; в справочнике его нет.
-- **Valve.** Страницы Valve Developer Community (Bernier 2001, Source Multiplayer Networking) отдают 403 и 503 автоматическим загрузчикам; существование и тема сверены по поисковому индексу.
+- **Unreal root motion в сети.** Совет «в мультиплеере только Root Motion from Montages Only» есть в документации UE 4.27 ([копия Web Archive](https://web.archive.org/web/20240228072719/https://docs.unrealengine.com/4.27/en-US/AnimatingObjects/SkeletalMeshAnimation/RootMotion/)): «from Everything» — только для игр без репликации анимации. Текущая страница UE5 о сети молчит.
+- **Valve.** Страницы Valve Developer Community (Bernier 2001, Source Multiplayer Networking) отдают 403 и 503 автоматическим загрузчикам; Lag Compensation и Source Multiplayer Networking прочитаны через Web Archive (снимки октября 2026).
 - **Ruskin, GDC 2012.** У доклада два id на GDC Vault (1015528 и 1015317); описание алгоритма — по пересказу в блоге Emily Short, не по слайдам.
 - **Лицензии.** Forge — GPL-3.0; XMage, GGPO, flecs, EnTT, ink, boardgame.io, GASDocumentation — MIT; phase-rs и GGRS — MIT/Apache-2.0; Recast — Zlib; Tracy — BSD-3-Clause; SabberStone, Fireplace — AGPL-3.0. Лицензия argentum-engine не определена.
 - **Scott Bilas.** Оригинальные PDF на scottbilas.com не открываются; пользоваться копией.
@@ -603,9 +603,8 @@ tools и tests: редактор и валидатор контента, реп�
 - Overwatch: аннотации Ford и Reed проверены, детали — только из вторичных разборов.
 - Celeste & Forgiveness: точные длительности coyote time и буфера прыжка в доступных источниках не названы.
 - Unity Animation Events: поведение при пропуске кадров и в переходах документацией не описано.
-- Mario AI: что агент Baumgarten строил A* по прогону физики игры — из пересказов, статью не открывали [не проверено].
 - Глава Ocio Barriales о точности ИИ (GAP3) не прочитана: PDF не распарсился; в справочнике только её тема по названию.
-- Отдельные потоки RNG в Slay the Spire и сохранение seed в XCOM: Enemy Unknown — сведения сообщества [не проверено].
+- Slay the Spire и XCOM: официальных описаний устройства RNG от студий нет; потоки StS — по коду модов и реконструкции, seed XCOM — по словам дизайнера в пересказе прессы.
 - Hitbox и hurtbox как термины — общая практика файтингов и экшена; глоссарий Infil не отдал текст загрузчику.
 - Доклада GDC о версионировании сохранений не найдено; П31 опирается на Factorio и Unreal.
 - Нет игрового первоисточника по property-based тестам геймплея; П45 опирается на Hypothesis и proptest.

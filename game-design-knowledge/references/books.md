@@ -60,7 +60,7 @@
 | A Game Design Vocabulary | Anna Anthropy, Naomi Clark, Addison-Wesley, 2014 | Глаголы, объекты, сцены, контекст на разборах маленьких игр. Противовес «большим» системам, полезна для обучающих уровней |
 | Game Design Theory | Keith Burgun, CRC, 20.09.2012 | Иерархия игрушка → головоломка → соревнование → игра. Полемична |
 | Challenges for Game Designers | Brenda Brathwaite (Romero), Ian Schreiber, Charles River Media, 2008/©2009 | Упражнения без компьютера, по 5 задач в главе. Теория растянута, ценность в практике бумажного прототипа |
-| Game Design: Theory & Practice | Richard Rouse III, Wordware `[не проверено]`, 2nd ed., 2004 (1st ed. 2001) | Интервью с Meier, Miyamoto и другими. Читать как историю ремесла: примеры `[устарело]` |
+| [Game Design: Theory & Practice](https://openlibrary.org/isbn/1556229127) | Richard Rouse III, Wordware, 2nd ed., 2004 (1st ed. 2001) | Интервью с Meier, Miyamoto и другими. Читать как историю ремесла: примеры `[устарело]` |
 
 ## 4. Системы, баланс, механики
 
@@ -74,9 +74,9 @@
 | Clockwork Game Design | Keith Burgun, CRC, 2nd ed., 24.12.2024 (©2025) | Одно ядро-механизм, всё остальное ему подчинено. Жёсткая позиция «элегантной стратегической игры» |
 | Pattern Language for Game Design | Christopher Barney, CRC, 2nd ed., 24.07.2026 | Язык паттернов по Александеру для описания и повторного использования решений |
 | Achievement Relocked: Loss Aversion and Game Design | Geoffrey Engelstein, MIT Press, 18.02.2020 | Неприятие потерь, эффект владения, фрейминг. Как подать штрафы и награды, чтобы их считали честными |
-| GameTek: The Math and Science of Gaming | Geoffrey Engelstein, 2019/2020 `[не проверено]` | Короткие эссе о вероятности, психологии, теории игр; популярное изложение input/output randomness |
+| [GameTek: The Math and Science of Gaming](https://openlibrary.org/isbn/9781460757376) | Geoffrey Engelstein, HarperCollins, 2020 | Короткие эссе о вероятности, психологии, теории игр; популярное изложение input/output randomness |
 | [Uncertainty in Games](https://www.publishersweekly.com/9780262018968) | Greg Costikyan, MIT Press (Playful Thinking), 2013 | Типология источников неопределённости. База для спора «удача против мастерства» |
-| Playing with Balance: Game Economy Design | Oscar Clark, CRC, 27.03.2026 | Экономика, F2P, live-ops. Подтверждены выход и дата, содержание `[не проверено]` |
+| [Playing with Balance: Game Economy Design](https://www.routledge.com/Playing-with-Balance-Game-Economy-Design/Clark/p/book/9781032971605) | Oscar Clark, CRC, 27.03.2026 | Экономика, F2P, live-ops: три петли вовлечения (Core, Context, Culture), ценность и обмен, источники и стоки, развитие экономики после запуска, этика |
 
 ## 5. Ощущение, UX, психология игрока
 
@@ -86,7 +86,7 @@
 | [The Gamer's Brain](https://www.routledge.com/9781032058573) | Celia Hodent, CRC, 2nd ed., ©2026 | Восприятие, внимание, память, мотивация в UX игр: онбординг, читаемость, когнитивная нагрузка. Во 2-м изд. добавлены этика монетизации, VR/AR, ИИ |
 | The Psychology of Video Games | Hodent, Routledge, 2020 | Те же темы сжато, на вечер, плюс разбор нейромифов |
 | [The Game Designer's Playbook](https://academic.oup.com/book/44165) | Samantha Stahlke, Pejman Mirza-Babaei, Oxford UP, 2022 | Interaction design: управление, обратная связь, туториалы. Мост между UX и геймдизайном |
-| Glued to Games | Scott Rigby, Richard M. Ryan, Praeger, 2011 `[не проверено]` | SDT и PENS для геймдизайнеров: компетентность, автономия, связанность |
+| [Glued to Games](https://openlibrary.org/isbn/9780313362248) | Scott Rigby, Richard M. Ryan, Praeger (ABC-CLIO), 2011 | SDT и PENS для геймдизайнеров: компетентность, автономия, связанность |
 | [How Games Move Us: Emotion by Design](https://news.ucsc.edu/2016/03/isbister-book/) | Katherine Isbister, MIT Press (Playful Thinking), 2016 | Эмоции через выбор, флоу, социальное взаимодействие, аватары, движение. Для мультиплеера и социальных механик |
 | [The Art of Failure](https://www.jesperjuul.net/artoffailure/) | Jesper Juul, MIT Press, февр. 2013 | Почему провал приятен и как проектировать честный провал: чья вина — игрока, игры или случая |
 
@@ -95,7 +95,7 @@
 | Книга | Автор, год, издание | Зачем читать |
 | --- | --- | --- |
 | [Games User Research](https://www.porchlightbooks.com/products/games-user-research-anders-drachen-9780198794844) | ред. Anders Drachen, Pejman Mirza-Babaei, Lennart Nacke, Oxford UP, 25.03.2018 | Справочник методов: плейтесты, опросы, интервью, биометрия, аналитика. Главы пишут практики индустрии |
-| [How To Be A Games User Researcher](https://gamesuserresearch.com/book/) | Steve Bromley (бывш. PlayStation), 2021 `[не проверено]` | Как спланировать, провести, проанализировать и донести до команды плейтест; карьера в GUR |
+| [How To Be A Games User Researcher](https://gamesuserresearch.com/book/) | Steve Bromley (бывш. PlayStation), самиздат, 2021 | Как спланировать, провести, проанализировать и донести до команды плейтест; карьера в GUR |
 | [Game Usability: Advancing the Player Experience](https://shop.elsevier.com/books/game-usability/isbister/978-0-12-374447-0) | ред. Katherine Isbister, Noah Schaffer, Morgan Kaufmann, ©2008 | Ранняя классика юзабилити игр. 2-го издания нет, примеры старые |
 
 ## 6. Уровни, продакшн, нарратив
@@ -125,23 +125,23 @@
 | --- | --- | --- |
 | Games: Agency as Art | C. Thi Nguyen, Oxford UP, 2020 (мягкая обложка 2025) | Игры как искусство упаковки агентности. Вывод для практики: проектируете не правила, а форму усилия |
 | The Beauty of Games | Frank Lantz, MIT Press, 2023 | Игры как эстетика мышления (шахматы, покер, Go). Не учебник |
-| Playing Smart | Julian Togelius, MIT Press, 2018 или 2019 `[не проверено]` | Игры и ИИ: процедурная генерация, ИИ-оппоненты. Полезна дизайнеру-программисту |
+| [Playing Smart](https://openlibrary.org/isbn/9780262039031) | Julian Togelius, MIT Press, 15.01.2019 | Игры и ИИ: процедурная генерация, ИИ-оппоненты. Полезна дизайнеру-программисту |
 
 ## 8. Новинки 2024–2026
 
-Новые издания проверены по каталогам издателей. Содержание книг из каталога Routledge (раздел [Games/Design](https://www.routledge.com/games-animation/games/design)) не проверено: известны названия и даты.
+Новые издания проверены по каталогам издателей. Содержание книг из каталога Routledge (раздел [Games/Design](https://www.routledge.com/games-animation/games/design)) не проверено: известны названия и даты. Исключения — Clark и Burgun, сверенные со страницами издателя.
 
 | Книга | Автор, год, издание | Зачем читать |
 | --- | --- | --- |
 | Game Design Workshop | Fullerton, CRC, 5th ed., 2024 | Усилен раздел про experience goals |
 | Level Up! | Rogers, Wiley, 3rd ed., 19.11.2024 | AR/VR и плейтест |
-| Clockwork Game Design | Burgun, CRC, 2nd ed., 24.12.2024 | Добавлены примеры и упражнения `[не проверено]` |
+| Clockwork Game Design | Burgun, CRC, 2nd ed., 24.12.2024 | Те же 4 главы (Theory, Anatomy, Construction, Pitfalls); список изменений издатель не приводит, примеры и упражнения были и в 1-м изд. |
 | [Too Much Fun: The Five Lives of the Commodore 64 Computer](https://www.jesperjuul.net/c64/) | Jesper Juul, MIT Press (Platform Studies), 10.12.2024 | История Commodore 64 и её «жизней» у разных людей. Не книга о дизайне удовольствия: для геймдизайна полезна косвенно |
 | The Well-Read Game: On Playing Thoughtfully | Tracy Fullerton, Matthew Farber, MIT Press, 2025 | Игровой опыт как «прочтение»; вдумчивая игра в дополнение к «well-played» |
 | The Gamer's Brain | Hodent, CRC, 2nd ed., ©2026 | Этика монетизации, VR/AR, ИИ |
 | Building Blocks of Tabletop Game Design | Engelstein, Shalev, CRC, 3rd ed., 27.07.2026 | Актуальная энциклопедия механик |
 | Pattern Language for Game Design | Barney, CRC, 2nd ed., 24.07.2026 | Язык паттернов |
-| Playing with Balance: Game Economy Design | Oscar Clark, CRC, 27.03.2026 | Экономика и live-ops; содержание `[не проверено]` |
+| Playing with Balance: Game Economy Design | Oscar Clark, CRC, 27.03.2026 | Экономика и live-ops: петли Core, Context, Culture; источники и стоки |
 | The Game Designer's Guide to Creating Licensed Tabletop Games | James Sheahan, CRC, 14.05.2026 | Работа с IP-лицензиями. Важна для игры по чужой франшизе |
 | Research Methods and Project Management in Games | Pooya Soltani, CRC, 01.05.2026 | Методы исследований и плейтестов |
 | The Rise of the Roguelite | ред. James Cartlidge, CRC, 20.07.2026 | Жанровый анализ |
@@ -187,17 +187,17 @@
 | [A Grammar of Gameplay](https://www.raphkoster.com/games/presentations/a-grammar-of-gameplay/) | Raph Koster, GDC 2005 | Игровые атомы и нотация |
 | [Game design is simple, actually](https://www.raphkoster.com/2025/11/03/game-design-is-simple-actually/) | Raph Koster, 03.11.2025 | Лучший современный чеклист фундамента |
 | [Kind Games](https://lostgarden.com/2024/06/28/kind-games-the-gdc-talk/) | Daniel Cook, GDC 2024 | Просоциальный мультиплеер; слайды открыты для учёбы |
-| [Juice it or lose it](https://www.youtube.com/watch?v=Fy0aCDmgnxg) | Martin Jonasson, Petri Purho, 2012; событие (Nordic Game) `[не проверено]` | «Сок» без изменения правил |
+| [Juice it or lose it](https://www.youtube.com/watch?v=Fy0aCDmgnxg) | Martin Jonasson, Petri Purho, Nordic Game Indie Night, 2012 ([демо](https://github.com/grapefrukt/juicy-breakout)) | «Сок» без изменения правил |
 | [The art of screenshake](https://www.youtube.com/watch?v=AJdEqssNZ-U) | Jan Willem Nijman, INDIGO Classes 2013 | Около 30 приёмов отклика на шутере |
-| I Have No Words & I Must Design | Greg Costikyan, 1994, [costik.com](http://www.costik.com/nowords.html) `[не проверено]` | Определение игры через решения, цель, противодействие, ресурсы |
+| I Have No Words & I Must Design | Greg Costikyan, Interactive Fantasy #2, 1994; дополненная версия 2002 — [DiGRA](https://dl.digra.org/index.php/dl/article/view/29) | Определение игры через решения, цель, противодействие, ресурсы |
 
 ## 11. Каналы и сайты
 
 | Источник | Автор, статус | Зачем |
 | --- | --- | --- |
 | [GDC Vault — Free](https://www.gdcvault.com/free) | GDC; часть бесплатно, архив 1996–2026 с фильтром Design | Главный архив докладов. Начните с Meier 2012, Rosewater 2016, Cook 2024, постмортемов |
-| [Game Maker's Toolkit](https://www.youtube.com/@GMTK) | Mark Brown, YouTube | Видеоразборы дизайна, серия Boss Keys; состав серий `[не проверено]`. Популяризировал kishōtenketsu |
-| [Design Doc](https://www.youtube.com/@DesignDoc) | YouTube, активен в 2026; автор `[не проверено]` | Разборы механик и жанров «почему это работает» |
+| [Game Maker's Toolkit](https://www.youtube.com/@GMTK) | Mark Brown, YouTube | Видеоразборы дизайна; серия Boss Keys о подземельях и мирах (Zelda, Metroid, Dark Souls, Hollow Knight). Популяризировал kishōtenketsu |
+| [Design Doc](https://www.youtube.com/@DesignDoc) | Братья Dan и Mike ([Patreon](https://www.patreon.com/designdoc/about)), YouTube, активен в 2026 | Разборы механик и жанров «почему это работает» |
 | [Game Developer](https://www.gamedeveloper.com/) | Informa, бывш. Gamasutra | Архив классики и постмортемов |
 | [Lostgarden](https://lostgarden.com/) | Daniel Cook, активен в 2025 | Skill atoms, социальный дизайн, прототипирование |
 | [raphkoster.com](https://www.raphkoster.com/) | Raph Koster, активен в 2025 | Слайды докладов, подборка «Recommended posts, 2017-2025» |
@@ -294,7 +294,7 @@
 2. Nutt, интервью с Hayashida, [«The Structure of Fun»](https://www.gamedeveloper.com/design/the-structure-of-fun-learning-from-i-super-mario-3d-land-i-s-director), 2012, и GMTK, [«Super Mario 3D World's 4 Step Level Design»](https://www.youtube.com/watch?v=dBmIkEvEBtA), 2015: одна механика на уровень. Выжимка — [foundations.md](foundations.md#15-kishōtenketsu-одна-механика-на-уровень).
 3. Swink, Game Feel: прыжок, инерция, отклик.
 4. Totten, An Architectural Approach to Level Design, 2nd ed.: навигация и эмоциональные пространства.
-5. Bycer, Game Design Deep Dive: Metroidvania, CRC, 2025 (содержание `[не проверено]`).
+5. Bycer, [Game Design Deep Dive: Metroidvania](https://www.routledge.com/Game-Design-Deep-Dive-Metroidvania/Bycer/p/book/9781032943923), CRC, 2025: история жанра, базовый дизайн, UI/UX 2D-платформера.
 
 ### Головоломки
 
@@ -334,7 +334,7 @@
 2. [Deconstructor of Fun](https://www.deconstructoroffun.com/): разборы мобильных хитов и live ops.
 3. Ben Brode, [«Designing MARVEL SNAP»](https://gdcvault.com/play/1029024/Designing-MARVEL-SNAP), GDC 2023: игра под короткую мобильную сессию.
 4. Shokrizade, [«The Top F2P Monetization Tricks»](https://www.gamedeveloper.com/business/the-top-f2p-monetization-tricks), 2013, вместе с Hodent, The Gamer's Brain, 2nd ed. (этика монетизации): какие приёмы считаются тёмными и чем их заменить.
-5. Oscar Clark, Playing with Balance: Game Economy Design, CRC, 2026 (содержание `[не проверено]`).
+5. Oscar Clark, Playing with Balance: Game Economy Design, CRC, 2026: петли вовлечения, источники и стоки, этика экономики.
 
 ### Нарративные игры
 
@@ -356,7 +356,9 @@
 - Число страниц почти у всех книг разное у разных продавцов.
 - Rogers, Level Up! 3rd ed.: 19.11.2024 у Wiley-VCH и heise; раньше здесь стоял декабрь 2024.
 - Fullerton & Farber, The Well-Read Game: 25.03.2025 (Apple Books) или 29.04.2025 (Penguin Australia).
-- Togelius, Playing Smart: Wikipedia даёт 2019; Penguin Australia для того же ISBN — 28.10.2025.
+- Togelius, Playing Smart: твёрдая обложка 15.01.2019 (ISBN 978-0-262-03903-1); дата 28.10.2025 у Penguin Australia относится к мягкой обложке (ISBN 978-0-262-05580-2).
+- Burgun, Clockwork Game Design, 2nd ed.: «примеры и упражнения» есть и в описании 1-го изд. 2015 года, это не новшество 2-го.
+- Costikyan, «I Have No Words…»: costik.com/nowords.html отдаёт 404; ссылка заменена на версию 2002 года в DiGRA.
 - Isbister & Schaffer, Game Usability: ©2008 у British Library, 29.08.2011 в карточке Elsevier.
 - Sheldon, 2nd ed.: Course Technology 2013 или Cengage 2014.
 - Juul, Too Much Fun: раньше описывалась по названию как книга об удовольствии; на деле это история Commodore 64.
@@ -365,6 +367,5 @@
 
 - Сайт MIT Press по-прежнему недоступен ботам; годы книг MIT Press подтверждены через сайты авторов, университетов, Penguin и Publishers Weekly.
 - Книги Emily Short (inkle) по нарративному дизайну не найдено. Книга Bromley называется «How To Be A Games User Researcher»; «How to Run Usability Tests» не найдена.
-- Событие «Juice it or lose it» (Nordic Game Conference или Nordic Game Jam 2012) не подтверждено первоисточником.
-- Содержание новинок 2026 года из каталога Routledge не проверено.
+- Содержание новинок 2026 года из каталога Routledge не проверено, кроме Clark.
 - Актуальность модели Quantic Foundry и размер её выборки не подтверждены.
